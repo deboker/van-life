@@ -5,6 +5,8 @@ import { loginUser } from "../api"
 export default function Login() {
     const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" })
     const [status, setStatus] = React.useState("idle")
+    const [error, setError] = React.useState(null)
+    
     const location = useLocation()
 
     function handleSubmit(e) {
@@ -13,7 +15,11 @@ export default function Login() {
         loginUser(loginFormData)
             .then(data => {
 
-            }).finally(() => {
+            })
+            .catch(err => {
+                setError(err)
+            })
+            .finally(() => {
                 setStatus("idle")
             }) 
     }
@@ -29,10 +35,14 @@ export default function Login() {
     return (
         <div className="login-container">
             {
-            location.state?.message &&
-            <h3 className="login-first">{location.state.message}</h3>
+                location.state?.message &&
+                <h3 className="login-first">{location.state.message}</h3>
             }
             <h1>Sign in to your account</h1>
+            {
+                error?.message &&
+                <h3 className="login-first">{error.message}</h3>
+            }
             <form onSubmit={handleSubmit} className="login-form">
                 <input
                     name="email"
