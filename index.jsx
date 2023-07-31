@@ -24,6 +24,7 @@ import Login from "./pages/Login"
 import Layout from "./components/Layout"
 import HostLayout from "./components/HostLayout"
 import Error from "./components/Error"
+import AuthRequired from './components/AuthRequired'
 
 import "./server"
 
@@ -43,6 +44,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     />
     <Route path="vans/:id" element={<VanDetail />} />
 
+    <Route element={<AuthRequired />}>
     <Route path="host" element={<HostLayout />}>
       <Route index element={<Dashboard />} />
       <Route path="income" element={<Income />} />
@@ -54,6 +56,8 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="photos" element={<HostVanPhotos />} />
       </Route>
     </Route>
+    </Route>
+
     <Route path="*" element={<NotFound />} />
   </Route>
 ))
