@@ -22,7 +22,7 @@ export default function Login() {
         <div className="login-container">
             {
             location.state?.message &&
-            <h3>{location.state.message}</h3>
+            <h3 className="login-first">{location.state.message}</h3>
             }
             <h1>Sign in to your account</h1>
             <form onSubmit={handleSubmit} className="login-form">
