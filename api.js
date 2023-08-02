@@ -22,7 +22,7 @@ export async function getVans() {
         ...doc.data(),
         id: doc.id
     }))
-    console.log(vans)
+    return vans
 }
 
 // export async function getVans(id) {
