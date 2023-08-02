@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { 
-    getFirestore, 
+import { initializeApp } from "firebase/app"
+import {
+    getFirestore,
     collection,
     doc,
     getDocs,
@@ -11,18 +11,18 @@ import {
 } from "firebase/firestore/lite"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDFgLzeZDcVuo8Vnl9KBocLESn_Enspf-4",
-  authDomain: "vanlife-a2e86.firebaseapp.com",
-  projectId: "vanlife-a2e86",
-  storageBucket: "vanlife-a2e86.appspot.com",
-  messagingSenderId: "146556132020",
-  appId: "1:146556132020:web:edd580b13686e3174095e1"
+    apiKey: "AIzaSyD_k3v3HK3tKEqhlqFHPkwogW7PqEqhGhk",
+    authDomain: "vanlife-a1af5.firebaseapp.com",
+    projectId: "vanlife-a1af5",
+    storageBucket: "vanlife-a1af5.appspot.com",
+    messagingSenderId: "803007000356",
+    appId: "1:803007000356:web:446cd3a1ca406839258db1"
 };
 
-
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
+// Refactoring the fetching functions below
 const vansCollectionRef = collection(db, "vans")
 
 export async function getVans() {
