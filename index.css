@@ -300,6 +300,7 @@ i[class*="van-type-"] {
 }
 
 .van-detail-container .back-button:visited {
+    color: darkmagenta;
 }
 
 .van-detail-container .back-button span {
