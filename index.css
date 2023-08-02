@@ -309,7 +309,7 @@ i[class*="van-type-"] {
 .van-detail {
     display: flex;
     flex-direction: column;
-    color: #161616;
+    color: #341c1c;
 }
 
 .van-detail img {
@@ -709,7 +709,7 @@ img.graph {
 }
 
 .host-reviews > img {
-    margin-bottom: 35px;
+    margin-bottom: 36px;
 }
 
 .host-reviews .review {
