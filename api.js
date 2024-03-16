@@ -11,13 +11,14 @@ import {
 } from "firebase/firestore/lite"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDFgLzeZDcVuo8Vnl9KBocLESn_Enspf-4",
-    authDomain: "vanlife-a2e86.firebaseapp.com",
-    projectId: "vanlife-a2e86",
-    storageBucket: "vanlife-a2e86.appspot.com",
-    messagingSenderId: "146556132020",
-    appId: "1:146556132020:web:edd580b13686e3174095e1"
-  };
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
+};
+
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
