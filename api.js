@@ -24,7 +24,7 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 // Refactoring the fetching functions below
-const vansCollectionRef = collection(db, "vans-1")
+const vansCollectionRef = collection(db, "vans")
 
 export async function getVans() {
     const snapshot = await getDocs(vansCollectionRef)
@@ -36,7 +36,7 @@ export async function getVans() {
 }
 
 export async function getVan(id) {
-    const docRef = doc(db, "vans-1", id)
+    const docRef = doc(db, "vans", id)
     const snapshot = await getDoc(docRef)
     return {
         ...snapshot.data(),
