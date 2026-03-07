@@ -1,11 +1,12 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { getHostVans } from "../../api"
 
 export default function HostVans() {
     const [vans, setVans] = React.useState([])
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         async function loadVans() {
@@ -48,7 +49,12 @@ export default function HostVans() {
 
     return (
         <section>
-            <h1 className="host-vans-title">Your listed vans</h1>
+            <div className="host-vans-header">
+                <h1 className="host-vans-title">Your listed vans</h1>
+                <button className="pill primary" onClick={() => navigate("/host/vans/new")}>
+                    + Add van
+                </button>
+            </div>
             <div className="host-vans-list">
                 {
                     vans.length > 0 ? (
