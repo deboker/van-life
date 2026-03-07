@@ -1,5 +1,9 @@
 {
   "name": "project",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "firebase": "^10.1.0",
     "miragejs": "^0.1.47",
