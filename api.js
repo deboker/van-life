@@ -69,7 +69,11 @@ export async function registerUser({ email, password }) {
       email: cred.user.email,
     };
   } catch (err) {
-    if (err?.code === "auth/network-request-failed") {
+    if (
+      err?.code === "auth/network-request-failed" &&
+      typeof window !== "undefined" &&
+      window.location.hostname === "localhost"
+    ) {
       const res = await fetch("/api/register", {
         method: "post",
         body: JSON.stringify({ email, password }),
@@ -96,8 +100,11 @@ export async function loginUser({ email, password }) {
       email: cred.user.email,
     };
   } catch (err) {
-    // Fallback for offline / adblock / local dev: use Mirage mock auth
-    if (err?.code === "auth/network-request-failed") {
+    if (
+      err?.code === "auth/network-request-failed" &&
+      typeof window !== "undefined" &&
+      window.location.hostname === "localhost"
+    ) {
       const res = await fetch("/api/login", {
         method: "post",
         body: JSON.stringify({ email, password }),
