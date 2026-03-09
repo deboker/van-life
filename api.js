@@ -70,26 +70,38 @@ export async function registerUser({ email, password }) {
     };
   } catch (err) {
     console.error(err);
-    if (
-      err?.code === "auth/network-request-failed" &&
-      typeof window !== "undefined" &&
-      window.location.hostname === "localhost"
-    ) {
-      const res = await fetch("/api/register", {
-        method: "post",
-        body: JSON.stringify({ email, password }),
-      });
+    try {
+      const res = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebaseConfig.apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password, returnSecureToken: true }),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
-        throw {
-          message: data.message || "Registration failed",
-          statusText: res.statusText,
-          status: res.status,
-        };
+        throw new Error(data.error?.message || "Registration failed");
       }
-      return data;
+      return { uid: data.localId, email: data.email };
+    } catch (fallbackErr) {
+      console.error(fallbackErr);
+      if (
+        typeof window !== "undefined" &&
+        window.location.hostname === "localhost"
+      ) {
+        const res = await fetch("/api/register", {
+          method: "post",
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Registration failed");
+        }
+        return data;
+      }
+      throw err;
     }
-    throw err;
   }
 }
 
@@ -102,25 +114,37 @@ export async function loginUser({ email, password }) {
     };
   } catch (err) {
     console.error(err);
-    if (
-      err?.code === "auth/network-request-failed" &&
-      typeof window !== "undefined" &&
-      window.location.hostname === "localhost"
-    ) {
-      const res = await fetch("/api/login", {
-        method: "post",
-        body: JSON.stringify({ email, password }),
-      });
+    try {
+      const res = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseConfig.apiKey}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password, returnSecureToken: true }),
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
-        throw {
-          message: data.message || "Login failed",
-          statusText: res.statusText,
-          status: res.status,
-        };
+        throw new Error(data.error?.message || "Login failed");
       }
-      return data;
+      return { uid: data.localId, email: data.email };
+    } catch (fallbackErr) {
+      console.error(fallbackErr);
+      if (
+        typeof window !== "undefined" &&
+        window.location.hostname === "localhost"
+      ) {
+        const res = await fetch("/api/login", {
+          method: "post",
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Login failed");
+        }
+        return data;
+      }
+      throw err;
     }
-    throw err;
   }
 }
