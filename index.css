@@ -756,6 +756,12 @@ main {
   width: fit-content;
 }
 
+.host-van-detail .host-van-actions {
+  display: flex;
+  gap: 15px;
+  padding-top: 10px;
+}
+
 .host-vans-header {
   display: flex;
   align-items: center;
@@ -1061,6 +1067,14 @@ main {
   }
   .test-card {
     min-height: 0;
+  }
+  .host-van-detail {
+    flex-direction: column;
+    gap: 30px;
+    align-items: flex-start !important;
+  }
+  .host-van-detail-nav a {
+    padding: 6px 8px 6px 0 !important;
   }
 }
 
