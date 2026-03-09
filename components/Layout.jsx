@@ -1,10 +1,12 @@
 import React from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import Header from "./Header"
 import Footer from "./Footer"
 import CookieBanner from "./CookieBanner"
 
 export default function Layout() {
+    const location = useLocation()
+
     React.useEffect(() => {
         const onScroll = () => {
             if (window.scrollY > 10) {
@@ -17,6 +19,10 @@ export default function Layout() {
         window.addEventListener("scroll", onScroll)
         return () => window.removeEventListener("scroll", onScroll)
     }, [])
+
+    React.useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }, [location.pathname])
 
     return (
         <div className="site-wrapper">
