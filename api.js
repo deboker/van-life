@@ -70,9 +70,29 @@ export async function registerUser({ email, password }) {
 }
 
 export async function loginUser({ email, password }) {
-  const cred = await signInWithEmailAndPassword(auth, email, password);
-  return {
-    uid: cred.user.uid,
-    email: cred.user.email,
-  };
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    return {
+      uid: cred.user.uid,
+      email: cred.user.email,
+    };
+  } catch (err) {
+    // Fallback for offline / adblock / local dev: use Mirage mock auth
+    if (err?.code === "auth/network-request-failed") {
+      const res = await fetch("/api/login", {
+        method: "post",
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw {
+          message: data.message || "Login failed",
+          statusText: res.statusText,
+          status: res.status,
+        };
+      }
+      return data;
+    }
+    throw err;
+  }
 }
