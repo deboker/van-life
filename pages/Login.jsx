@@ -4,6 +4,7 @@ import { loginUser } from "../api"
 
 export default function Login() {
     const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" })
+    const [showPw, setShowPw] = React.useState(false)
     const [status, setStatus] = React.useState("idle")
     const [error, setError] = React.useState(null)
 
@@ -56,14 +57,24 @@ export default function Login() {
                     type="email"
                     placeholder="Email address"
                     value={loginFormData.email}
+                    autoComplete="email"
                 />
                 <input
                     name="password"
                     onChange={handleChange}
-                    type="password"
+                    type={showPw ? "text" : "password"}
                     placeholder="Password"
                     value={loginFormData.password}
+                    autoComplete="current-password"
                 />
+                <label className="pw-toggle">
+                    <input
+                        type="checkbox"
+                        checked={showPw}
+                        onChange={(e) => setShowPw(e.target.checked)}
+                    />
+                    <span>Show password</span>
+                </label>
                 <button
                     disabled={status === "submitting"}
                 >

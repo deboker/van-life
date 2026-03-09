@@ -44,6 +44,25 @@ createServer({
             const id = request.params.id
             return schema.vans.findBy({ id, hostId: "123" })
         })
+
+        this.post("/register", (schema, request) => {
+            const { email, password, name } = JSON.parse(request.requestBody)
+            const existing = schema.users.findBy({ email })
+            if (existing) {
+                return new Response(409, {}, { message: "User already exists" })
+            }
+            const user = schema.users.create({
+                id: Date.now().toString(),
+                email,
+                password,
+                name: name || email.split("@")[0]
+            })
+            user.password = undefined
+            return {
+                user,
+                token: "mock-token"
+            }
+        })
         
         this.post("/login", (schema, request) => {
             const { email, password } = JSON.parse(request.requestBody)

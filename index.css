@@ -1442,6 +1442,19 @@ i[class*="van-type-"] {
   color: red;
 }
 
+.pw-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+  color: #4d4d4d;
+  font-size: 0.95rem;
+}
+
+.pw-toggle input[type="checkbox"] {
+  accent-color: #ff8c38;
+}
+
 .host-dashboard-earnings {
   background-color: #ffead0;
   padding: 37px 26px;

@@ -62,11 +62,30 @@ export async function addVan(data, hostId = "123") {
 }
 
 export async function registerUser({ email, password }) {
-  const cred = await createUserWithEmailAndPassword(auth, email, password);
-  return {
-    uid: cred.user.uid,
-    email: cred.user.email,
-  };
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    return {
+      uid: cred.user.uid,
+      email: cred.user.email,
+    };
+  } catch (err) {
+    if (err?.code === "auth/network-request-failed") {
+      const res = await fetch("/api/register", {
+        method: "post",
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw {
+          message: data.message || "Registration failed",
+          statusText: res.statusText,
+          status: res.status,
+        };
+      }
+      return data;
+    }
+    throw err;
+  }
 }
 
 export async function loginUser({ email, password }) {

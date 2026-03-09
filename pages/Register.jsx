@@ -6,6 +6,7 @@ export default function Register() {
   const [form, setForm] = React.useState({ email: "", password: "" });
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
+  const [showPw, setShowPw] = React.useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from || "/host";
@@ -42,15 +43,25 @@ export default function Register() {
           placeholder="Email address"
           value={form.email}
           required
+          autoComplete="email"
         />
         <input
           name="password"
           onChange={handleChange}
-          type="password"
+          type={showPw ? "text" : "password"}
           placeholder="Password (min 6 chars)"
           value={form.password}
           required
+          autoComplete="new-password"
         />
+        <label className="pw-toggle">
+          <input
+            type="checkbox"
+            checked={showPw}
+            onChange={(e) => setShowPw(e.target.checked)}
+          />
+          <span>Show password</span>
+        </label>
         <button disabled={status === "submitting"}>
           {status === "submitting" ? "Creating..." : "Create account"}
         </button>
