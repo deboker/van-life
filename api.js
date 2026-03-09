@@ -9,6 +9,11 @@ import {
   where,
   addDoc,
 } from "firebase/firestore/lite";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -21,6 +26,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 const vansCollectionRef = collection(db, "vans");
 
@@ -55,19 +61,18 @@ export async function addVan(data, hostId = "123") {
   return { id: docRef.id, ...payload };
 }
 
-export async function loginUser(creds) {
-    const res = await fetch("/api/login",
-        { method: "post", body: JSON.stringify(creds) }
-    )
-    const data = await res.json()
+export async function registerUser({ email, password }) {
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+  return {
+    uid: cred.user.uid,
+    email: cred.user.email,
+  };
+}
 
-    if (!res.ok) {
-        throw {
-            message: data.message,
-            statusText: res.statusText,
-            status: res.status
-        }
-    }
-
-    return data
+export async function loginUser({ email, password }) {
+  const cred = await signInWithEmailAndPassword(auth, email, password);
+  return {
+    uid: cred.user.uid,
+    email: cred.user.email,
+  };
 }

@@ -1079,6 +1079,7 @@ main {
 .van-list-filter-buttons {
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .van-list-filter-buttons > a {
@@ -1093,18 +1094,33 @@ main {
   margin-top: 57px;
 }
 
+.van-tile {
+  background: white;
+  border-radius: 5px;
+  padding-bottom: 35px;
+}
+
 .van-tile a {
   color: #161616;
   text-decoration: none;
 }
 
+.van-tile h3,
+.van-tile p {
+  padding: 0 20px;
+}
+
 .van-tile img {
   max-width: 100%;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.van-tile .van-type {
+  margin-left: 20px;
 }
 
 .van-list-container button {
-  margin-right: 20px;
+  margin-right: 0px;
   cursor: pointer;
 }
 
@@ -1631,5 +1647,12 @@ img.graph {
   .host-nav a {
     padding: 5px 12px;
     font-size: 0.8rem;
+  }
+
+  .van-list {
+    gap: 20px;
+  }
+  .van-list-container {
+    padding-inline: 0;
   }
 }

@@ -1,5 +1,5 @@
 import React from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, Link } from "react-router-dom"
 import { loginUser } from "../api"
 
 export default function Login() {
@@ -73,6 +73,9 @@ export default function Login() {
                     }
                 </button>
             </form>
+            <p className="login-switch">
+                Don't have an account? <Link to="/register">Create one</Link>
+            </p>
         </div>
     )
 
