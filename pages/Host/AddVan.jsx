@@ -15,6 +15,7 @@ export default function AddVan() {
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
   const navigate = useNavigate();
+  const uid = localStorage.getItem("uid") || "123";
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -26,7 +27,7 @@ export default function AddVan() {
     setStatus("submitting");
     setError(null);
     try {
-      await addVan(form, "123");
+      await addVan(form, uid);
       setForm(initial);
       navigate("/host/vans");
     } catch (err) {

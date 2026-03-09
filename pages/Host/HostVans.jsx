@@ -7,12 +7,13 @@ export default function HostVans() {
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
     const navigate = useNavigate()
+    const uid = localStorage.getItem("uid") || "123"
 
     React.useEffect(() => {
         async function loadVans() {
             setLoading(true)
             try {
-                const data = await getHostVans()
+                const data = await getHostVans(uid)
                 setVans(data)
             } catch (err) {
                 setError(err)

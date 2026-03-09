@@ -20,6 +20,8 @@ export default function Login() {
             .then(data => {
                 setError(null)
                 localStorage.setItem("loggedin", true)
+                if (data?.uid) localStorage.setItem("uid", data.uid)
+                else if (data?.user?.id) localStorage.setItem("uid", data.user.id)
                 navigate(from, { replace: true })
             })
             .catch(err => {

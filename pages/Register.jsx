@@ -21,8 +21,10 @@ export default function Register() {
     setStatus("submitting");
     setError(null);
     try {
-      await registerUser(form);
+      const res = await registerUser(form);
       localStorage.setItem("loggedin", true);
+      if (res?.uid) localStorage.setItem("uid", res.uid);
+      else if (res?.user?.id) localStorage.setItem("uid", res.user.id);
       navigate(from, { replace: true });
     } catch (err) {
       setError(err);

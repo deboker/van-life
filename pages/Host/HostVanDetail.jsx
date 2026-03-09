@@ -1,12 +1,14 @@
 import React from "react"
 import { useParams, Link, NavLink, Outlet } from "react-router-dom"
-import { getVan } from "../../api"
+import { getVan, deleteVan } from "../../api"
 
 export default function HostVanDetail() {
     const [currentVan, setCurrentVan] = React.useState(null)
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
+    const [deleting, setDeleting] = React.useState(false)
     const { id } = useParams()
+    const uid = localStorage.getItem("uid") || "123"
 
     React.useEffect(() => {
         async function loadVans() {
@@ -57,6 +59,30 @@ export default function HostVanDetail() {
                             </i>
                             <h3>{currentVan.name}</h3>
                             <h4>${currentVan.price}/day</h4>
+                            {currentVan.hostId === uid && (
+                                <div className="host-van-actions">
+                                    <Link to="edit" className="link-button secondary">Edit</Link>
+                                    <button
+                                        className="link-button danger"
+                                        onClick={async () => {
+                                            const ok = confirm("Delete this van?");
+                                            if (!ok) return;
+                                            setDeleting(true);
+                                            try {
+                                                await deleteVan(id);
+                                                window.location.href = "/host/vans";
+                                            } catch (err) {
+                                                setError(err);
+                                            } finally {
+                                                setDeleting(false);
+                                            }
+                                        }}
+                                        disabled={deleting}
+                                    >
+                                        {deleting ? "Deleting..." : "Delete"}
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
 

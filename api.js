@@ -8,6 +8,8 @@ import {
   query,
   where,
   addDoc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore/lite";
 import {
   getAuth,
@@ -59,6 +61,20 @@ export async function addVan(data, hostId = "123") {
   };
   const docRef = await addDoc(vansCollectionRef, payload);
   return { id: docRef.id, ...payload };
+}
+
+export async function updateVan(id, data) {
+  const docRef = doc(db, "vans", id);
+  const payload = { ...data };
+  if (payload.price !== undefined) payload.price = Number(payload.price);
+  await updateDoc(docRef, payload);
+  return { id, ...payload };
+}
+
+export async function deleteVan(id) {
+  const docRef = doc(db, "vans", id);
+  await deleteDoc(docRef);
+  return true;
 }
 
 export async function registerUser({ email, password }) {
