@@ -69,6 +69,7 @@ export async function registerUser({ email, password }) {
       email: cred.user.email,
     };
   } catch (err) {
+    console.error(err);
     if (
       err?.code === "auth/network-request-failed" &&
       typeof window !== "undefined" &&
@@ -100,6 +101,7 @@ export async function loginUser({ email, password }) {
       email: cred.user.email,
     };
   } catch (err) {
+    console.error(err);
     if (
       err?.code === "auth/network-request-failed" &&
       typeof window !== "undefined" &&
