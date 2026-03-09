@@ -15,6 +15,9 @@ import HostVanInfo from "./pages/Host/HostVanInfo";
 import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import AddVan from "./pages/Host/AddVan";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
@@ -41,6 +44,9 @@ function App() {
           <Route path="vans" element={<Vans />} />
           <Route path="vans/:id" element={<VanDetail />} />
           <Route path="login" element={<Login />} />
+          <Route path="terms" element={<Terms />} />
+          <Route path="privacy" element={<Privacy />} />
+          <Route path="cookies" element={<Cookies />} />
 
           <Route element={<AuthRequired />}>
             <Route path="host" element={<HostLayout />}>

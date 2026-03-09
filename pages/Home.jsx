@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import hero1 from "../assets/images/home-hero.png";
-import hero2 from "../assets/images/about-hero.png";
+const hero1 =
+  "https://images.unsplash.com/photo-1597151116153-d2e8cb44fe41?auto=format&fit=crop&w=1600&q=80";
+const hero2 =
+  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1600&q=80";
 const hero3 =
-  "https://assets.scrimba.com/advanced-react/react-router/green-wonder.png";
+  "https://images.unsplash.com/photo-1629430163411-e718ffc375a6?auto=format&fit=crop&w=1600&q=80";
 import { getVans } from "../api";
+import FeatureAccordionSection from "../components/FeatureAccordionSection";
+import TestimonialsSlider from "../components/TestimonialsSlider";
 
 const slides = [
   {
@@ -77,16 +81,6 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-        <div className="slider-dots">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={i === index ? "dot active" : "dot"}
-              onClick={() => goTo(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            />
           ))}
         </div>
       </div>
@@ -187,7 +181,16 @@ export default function Home() {
         </div>
         <div className="steps-grid">
           <div className="step-card">
-            <div className="step-icon">🔍</div>
+            <div className="step-icon">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M10.5 4a6.5 6.5 0 0 1 5.182 10.438l3.44 3.44a1 1 0 0 1-1.414 1.414l-3.44-3.44A6.5 6.5 0 1 1 10.5 4Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z" />
+              </svg>
+            </div>
             <h3>Browse</h3>
             <p>
               Filter by type, price, and host rating. Every van has real photos
@@ -195,7 +198,16 @@ export default function Home() {
             </p>
           </div>
           <div className="step-card">
-            <div className="step-icon">📅</div>
+            <div className="step-icon">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1Zm0 6a1 1 0 1 0 0 2h10a1 1 0 1 0 0-2H7Z" />
+              </svg>
+            </div>
             <h3>Pick dates</h3>
             <p>
               Lock in your dates with instant booking. Transparent pricing
@@ -203,7 +215,16 @@ export default function Home() {
             </p>
           </div>
           <div className="step-card">
-            <div className="step-icon">🛣️</div>
+            <div className="step-icon">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M10.28 3.11a1 1 0 0 1 .97-.61h1.5a1 1 0 0 1 .97 1.26l-2.6 9.74a1 1 0 0 0 1.94.52l2.6-9.73A3 3 0 0 0 12.75 1h-1.5a3 3 0 0 0-2.91 3.78l2.36 8.84a1 1 0 0 0 1.93-.52l-2.35-8.84Zm-5.4 3.53A1 1 0 0 0 3 7.62V21a1 1 0 0 0 1.24.97l5.5-1.37a1 1 0 0 0 .74-.97v-5.63a1 1 0 0 0-.03-.25L4.88 6.64Zm13.84.11-6.27 7.94a1 1 0 0 0-.22.62v5.86a1 1 0 0 0 .74.97l5.5 1.37A1 1 0 0 0 20 21V7.62a1 1 0 0 0-1.28-.88Z" />
+              </svg>
+            </div>
             <h3>Hit the road</h3>
             <p>
               Easy pickup instructions, in-trip chat with the host, and support
@@ -216,6 +237,17 @@ export default function Home() {
             See all vans
           </Link>
         </div>
+      </section>
+      <FeatureAccordionSection />
+      <TestimonialsSlider />
+      <section className="confidence-cta">
+        <div>
+          <p className="eyebrow">Book with confidence</p>
+          <h2>Your destination is waiting.<br />Your van is ready.</h2>
+        </div>
+        <Link to="vans" className="link-button">
+          Explore our vans
+        </Link>
       </section>
     </>
   );
