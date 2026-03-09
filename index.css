@@ -79,7 +79,7 @@ header .login-link {
   align-items: center;
 }
 
-nav {
+header .site-nav {
   display: flex;
   gap: 4px;
   align-items: center;
@@ -705,55 +705,54 @@ main {
 }
 
 .add-van-form button {
+  .host-van-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+  }
 
-.host-van-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
+  .link-button.secondary {
+    background: transparent;
+    color: #161616;
+    border: 1px solid #161616;
+  }
 
-.link-button.secondary {
-  background: transparent;
-  color: #161616;
-  border: 1px solid #161616;
-}
+  .link-button.danger {
+    background: #d92d20;
+    color: white;
+  }
 
-.link-button.danger {
-  background: #d92d20;
-  color: white;
-}
+  .van-edit {
+    padding: 0 26px;
+  }
 
-.van-edit {
-  padding: 0 26px;
-}
+  .van-edit-form {
+    display: grid;
+    gap: 14px;
+    max-width: 520px;
+  }
 
-.van-edit-form {
-  display: grid;
-  gap: 14px;
-  max-width: 520px;
-}
+  .van-edit-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+    color: #161616;
+  }
 
-.van-edit-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-weight: 600;
-  color: #161616;
-}
+  .van-edit-form input,
+  .van-edit-form select,
+  .van-edit-form textarea {
+    border: 1px solid rgba(209, 213, 219);
+    border-radius: 5px;
+    padding: 10px;
+    font-family: "Inter", sans-serif;
+  }
 
-.van-edit-form input,
-.van-edit-form select,
-.van-edit-form textarea {
-  border: 1px solid rgba(209, 213, 219);
-  border-radius: 5px;
-  padding: 10px;
-  font-family: "Inter", sans-serif;
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-}
+  .form-actions {
+    display: flex;
+    gap: 10px;
+  }
   width: fit-content;
 }
 
@@ -997,7 +996,7 @@ main {
     padding: 0 1.5rem;
     height: 50px;
   }
-  nav {
+  header .site-nav {
     display: none;
     position: absolute;
     top: 65px;
@@ -1012,10 +1011,10 @@ main {
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
     z-index: 10;
   }
-  nav.open {
+  header .site-nav.open {
     display: flex;
   }
-  nav a {
+  header .site-nav a {
     padding: 10px 6px;
   }
   .burger {
@@ -1377,6 +1376,8 @@ i[class*="van-type-"] {
 
 .host-van-detail-nav {
   display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
   margin-block: 25px;
 }
 
@@ -1387,18 +1388,21 @@ i[class*="van-type-"] {
   padding: 5px 20px;
 }
 
-.host-van-detail-nav a:first-of-type {
-  text-decoration: none;
-  color: #4d4d4d;
-  font-weight: 500;
-  padding: 5px 15px;
-  margin-left: -15px;
-}
-
 .host-van-detail-nav a:hover {
   color: #161616;
   text-decoration: underline;
   font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .host-van-detail-nav {
+    gap: 8px;
+    margin-block: 20px;
+  }
+
+  .host-van-detail-nav a {
+    padding: 6px 14px;
+  }
 }
 
 .host-van-detail-info > h4 {
@@ -1703,7 +1707,7 @@ img.graph {
   .host-dashboard-earnings,
   .host-income,
   .host-nav-wrap {
-    margin-top: 5rem;
+    margin-top: 1rem;
   }
 
   .host-nav a {

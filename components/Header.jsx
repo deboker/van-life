@@ -35,7 +35,7 @@ export default function Header() {
                 <span></span>
                 <span></span>
             </button>
-            <nav className={isOpen ? "open" : ""}>
+            <nav className={`site-nav ${isOpen ? "open" : ""}`}>
                 <NavLink
                     to="/"
                     end

@@ -7,9 +7,10 @@ export default function Dashboard() {
     const [vans, setVans] = React.useState([])
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
+    const uid = localStorage.getItem("uid") || "123"
     React.useEffect(() => {
         setLoading(true)
-        getHostVans()
+        getHostVans(uid)
             .then(data => setVans(data))
             .catch(err => setError(err))
             .finally(() => setLoading(false))
