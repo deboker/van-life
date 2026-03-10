@@ -10,11 +10,13 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  setDoc,
 } from "firebase/firestore/lite";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -77,12 +79,27 @@ export async function deleteVan(id) {
   return true;
 }
 
-export async function registerUser({ email, password }) {
+async function fetchUserProfile(uid) {
+  if (!uid) return null;
+  const snap = await getDoc(doc(db, "users", uid));
+  return snap.exists() ? snap.data() : null;
+}
+
+export async function registerUser({ name, email, password }) {
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
+    if (name) {
+      await updateProfile(cred.user, { displayName: name });
+      await setDoc(doc(db, "users", cred.user.uid), {
+        name,
+        email,
+        createdAt: new Date().toISOString(),
+      });
+    }
     return {
       uid: cred.user.uid,
       email: cred.user.email,
+      name: name || cred.user.displayName || "",
     };
   } catch (err) {
     console.error(err);
@@ -99,7 +116,14 @@ export async function registerUser({ email, password }) {
       if (!res.ok) {
         throw new Error(data.error?.message || "Registration failed");
       }
-      return { uid: data.localId, email: data.email };
+      if (name) {
+        await setDoc(doc(db, "users", data.localId), {
+          name,
+          email: data.email,
+          createdAt: new Date().toISOString(),
+        });
+      }
+      return { uid: data.localId, email: data.email, name: name || "" };
     } catch (fallbackErr) {
       console.error(fallbackErr);
       if (
@@ -108,7 +132,7 @@ export async function registerUser({ email, password }) {
       ) {
         const res = await fetch("/api/register", {
           method: "post",
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ name, email, password }),
         });
         const data = await res.json();
         if (!res.ok) {
@@ -124,9 +148,11 @@ export async function registerUser({ email, password }) {
 export async function loginUser({ email, password }) {
   try {
     const cred = await signInWithEmailAndPassword(auth, email, password);
+    const profile = await fetchUserProfile(cred.user.uid);
     return {
       uid: cred.user.uid,
       email: cred.user.email,
+      name: profile?.name || cred.user.displayName || "",
     };
   } catch (err) {
     console.error(err);
@@ -143,7 +169,12 @@ export async function loginUser({ email, password }) {
       if (!res.ok) {
         throw new Error(data.error?.message || "Login failed");
       }
-      return { uid: data.localId, email: data.email };
+      const profile = await fetchUserProfile(data.localId);
+      return {
+        uid: data.localId,
+        email: data.email,
+        name: profile?.name || "",
+      };
     } catch (fallbackErr) {
       console.error(fallbackErr);
       if (

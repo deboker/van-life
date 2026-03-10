@@ -4,6 +4,8 @@ import { Link, NavLink, useLocation } from "react-router-dom"
 export default function Header() {
     const [isOpen, setIsOpen] = React.useState(false)
     const location = useLocation()
+    const [userName, setUserName] = React.useState(() => localStorage.getItem("name") || "")
+    const [isLoggedIn, setIsLoggedIn] = React.useState(() => !!localStorage.getItem("loggedin"))
     const activeStyles = {
         fontWeight: "bold",
         textDecoration: "underline",
@@ -15,11 +17,16 @@ export default function Header() {
     React.useEffect(() => {
         // close mobile nav after any route change
         closeMenu()
+        setUserName(localStorage.getItem("name") || "")
+        setIsLoggedIn(!!localStorage.getItem("loggedin"))
     }, [location.pathname])
 
     function fakeLogOut() {
         localStorage.removeItem("loggedin")
+        localStorage.removeItem("name")
         closeMenu()
+        setIsLoggedIn(false)
+        setUserName("")
     }
 
     return (
@@ -65,36 +72,44 @@ export default function Header() {
                 >
                     Vans
                 </NavLink>
-                <Link to="login" className="login-link" onClick={closeMenu} aria-label="Login">
-                    <svg
-                        className="login-icon"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M12 12.5a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-                            stroke="#161616"
-                            strokeWidth="1.6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        <path
-                            d="M5 20.4a7 7 0 0 1 14 0"
-                            stroke="#161616"
-                            strokeWidth="1.6"
-                            strokeLinecap="round"
-                        />
-                        <circle
-                            cx="17.5"
-                            cy="6.5"
-                            r="1.6"
-                            stroke="#ff8c38"
-                            strokeWidth="1.6"
-                        />
-                    </svg>
-                </Link>
-                <button className="logout-btn" onClick={fakeLogOut}>Log out</button>
+                {isLoggedIn ? (
+                    <>
+                        <div className="user-pill" aria-label="Logged in user">
+                            {userName || "You"}
+                        </div>
+                        <button className="logout-btn" onClick={fakeLogOut}>Log out</button>
+                    </>
+                ) : (
+                    <Link to="login" className="login-link" onClick={closeMenu} aria-label="Login">
+                        <svg
+                            className="login-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 12.5a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+                                stroke="#161616"
+                                strokeWidth="1.6"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M5 20.4a7 7 0 0 1 14 0"
+                                stroke="#161616"
+                                strokeWidth="1.6"
+                                strokeLinecap="round"
+                            />
+                            <circle
+                                cx="17.5"
+                                cy="6.5"
+                                r="1.6"
+                                stroke="#ff8c38"
+                                strokeWidth="1.6"
+                            />
+                        </svg>
+                    </Link>
+                )}
             </nav>
         </header>
     )

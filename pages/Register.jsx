@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../api";
 
 export default function Register() {
-  const [form, setForm] = React.useState({ email: "", password: "" });
+  const [form, setForm] = React.useState({ name: "", email: "", password: "" });
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
   const [showPw, setShowPw] = React.useState(false);
@@ -25,6 +25,9 @@ export default function Register() {
       localStorage.setItem("loggedin", true);
       if (res?.uid) localStorage.setItem("uid", res.uid);
       else if (res?.user?.id) localStorage.setItem("uid", res.user.id);
+      if (res?.name || form.name) {
+        localStorage.setItem("name", res?.name || form.name);
+      }
       navigate(from, { replace: true });
     } catch (err) {
       setError(err);
@@ -38,6 +41,15 @@ export default function Register() {
       <h1>Create your account</h1>
       {error?.message && <h3 className="login-error">{error.message}</h3>}
       <form onSubmit={handleSubmit} className="login-form">
+        <input
+          name="name"
+          onChange={handleChange}
+          type="text"
+          placeholder="Full name"
+          value={form.name}
+          required
+          autoComplete="name"
+        />
         <input
           name="email"
           onChange={handleChange}

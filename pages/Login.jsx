@@ -22,6 +22,12 @@ export default function Login() {
                 localStorage.setItem("loggedin", true)
                 if (data?.uid) localStorage.setItem("uid", data.uid)
                 else if (data?.user?.id) localStorage.setItem("uid", data.user.id)
+                const nameFromAuth = data?.name || data?.user?.name
+                if (nameFromAuth) {
+                    localStorage.setItem("name", nameFromAuth)
+                } else {
+                    localStorage.removeItem("name")
+                }
                 navigate(from, { replace: true })
             })
             .catch(err => {

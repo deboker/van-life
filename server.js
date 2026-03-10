@@ -58,6 +58,25 @@ if (import.meta.env.DEV) {
                     token: "Enjoy your pizza, here's your tokens."
                 }
             })
+
+            this.post("/register", (schema, request) => {
+                const { email, password, name } = JSON.parse(request.requestBody)
+                const existing = schema.users.findBy({ email })
+                if (existing) {
+                    return new Response(400, {}, { message: "User already exists" })
+                }
+                const user = schema.users.create({
+                    email,
+                    password,
+                    name: name || email.split("@")[0],
+                    id: String(Date.now())
+                })
+                user.password = undefined
+                return {
+                    user,
+                    token: "Enjoy your pizza, here's your tokens."
+                }
+            })
         }
     })
 }

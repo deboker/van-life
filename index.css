@@ -79,6 +79,16 @@ header .login-link {
   align-items: center;
 }
 
+.user-pill {
+  padding: 6px 12px;
+  background: #ffe2c8;
+  color: #161616;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
 header .site-nav {
   display: flex;
   gap: 4px;
@@ -1173,8 +1183,12 @@ main {
 }
 
 .van-tile img {
-  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
   border-radius: 5px 5px 0 0;
+  display: block;
 }
 
 .van-tile .van-type {
