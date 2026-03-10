@@ -743,7 +743,7 @@ main {
 }
 
 .van-edit {
-  padding: 0 26px;
+  padding: 45px 25px;
   margin: 20px 0 30px;
   background: white;
   border-radius: 12px;
@@ -751,41 +751,41 @@ main {
 }
 
 .van-edit-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 18px 22px;
-    max-width: 920px;
-    margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px 22px;
+  max-width: 920px;
+  margin-top: 12px;
 }
 
 .van-edit-form label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-weight: 600;
-    color: #161616;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  color: #161616;
+}
 
-  .van-edit-form input,
+.van-edit-form input,
 .van-edit-form select,
 .van-edit-form textarea {
-    border: 1px solid rgba(209, 213, 219);
-    border-radius: 5px;
-    padding: 10px;
-    font-family: "Inter", sans-serif;
+  border: 1px solid rgba(209, 213, 219);
+  border-radius: 5px;
+  padding: 10px;
+  font-family: "Inter", sans-serif;
 }
 
 .van-edit-form textarea {
-    grid-column: 1 / -1;
-    min-height: 130px;
+  grid-column: 1 / -1;
+  min-height: 130px;
 }
 
 .form-actions {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    grid-column: 1 / -1;
-    margin-top: 4px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+  margin-top: 4px;
 }
 
 .host-van-detail .host-van-actions {
