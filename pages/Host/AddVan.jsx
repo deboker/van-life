@@ -36,6 +36,9 @@ export default function AddVan() {
     setStatus("submitting");
     setError(null);
     try {
+      if (!form.imageUrl && !mainFile) {
+        throw new Error("Add a main image URL or upload a main image.");
+      }
       const vanId = Date.now().toString();
       let imageUrl = form.imageUrl;
       let gallery = parseGallery(form.galleryText);
@@ -116,7 +119,6 @@ export default function AddVan() {
             value={form.imageUrl}
             onChange={handleChange}
             placeholder="https://..."
-            required
           />
         </label>
         <label>
