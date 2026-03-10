@@ -4,6 +4,7 @@ import { getVan } from "../../api"
 
 export default function VanDetail() {
     const [van, setVan] = React.useState(null)
+    const [activeIndex, setActiveIndex] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
     const { id } = useParams()
@@ -15,6 +16,7 @@ export default function VanDetail() {
             try {
                 const data = await getVan(id)
                 setVan(data)
+                setActiveIndex(0)
             } catch (err) {
                 setError(err)
             } finally {
@@ -34,6 +36,17 @@ export default function VanDetail() {
 
     const search = location.state?.search || "";
     const type = location.state?.type || "all";
+
+    const images = van
+        ? [van.imageUrl, ...(van.gallery || [])].filter(Boolean)
+        : []
+
+    function showNext(delta) {
+        setActiveIndex(prev => {
+            const next = (prev + delta + images.length) % images.length
+            return next
+        })
+    }
     
     return (
         <div className="van-detail-container">
@@ -45,7 +58,48 @@ export default function VanDetail() {
             
             {van && (
                 <div className="van-detail">
-                    <img src={van.imageUrl} />
+                    {images.length > 0 && (
+                        <div className="van-gallery">
+                            <div className="van-gallery-main">
+                                {images.length > 1 && (
+                                    <button
+                                        className="gallery-arrow prev"
+                                        type="button"
+                                        onClick={() => showNext(-1)}
+                                        aria-label="Previous image"
+                                    >
+                                        ‹
+                                    </button>
+                                )}
+                                <img src={images[activeIndex]} alt={van.name} />
+                                {images.length > 1 && (
+                                    <button
+                                        className="gallery-arrow next"
+                                        type="button"
+                                        onClick={() => showNext(1)}
+                                        aria-label="Next image"
+                                    >
+                                        ›
+                                    </button>
+                                )}
+                            </div>
+                            {images.length > 1 && (
+                                <div className="van-gallery-thumbs">
+                                    {images.map((src, i) => (
+                                        <button
+                                            key={src + i}
+                                            type="button"
+                                            className={`thumb ${i === activeIndex ? "is-active" : ""}`}
+                                            onClick={() => setActiveIndex(i)}
+                                            aria-label={`Show image ${i + 1}`}
+                                        >
+                                            <img src={src} alt={`${van.name} ${i + 1}`} />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
                     <i className={`van-type ${van.type} selected`}>
                         {van.type}
                     </i>

@@ -1285,9 +1285,74 @@ i[class*="van-type-"] {
   color: #341c1c;
 }
 
-.van-detail img {
-  border-radius: 5px;
-  margin-block: 47px;
+.van-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-block: 30px;
+}
+
+.van-gallery-main {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.van-gallery-main img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+
+.gallery-arrow.prev {
+  left: 10px;
+}
+.gallery-arrow.next {
+  right: 10px;
+}
+
+.van-gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 8px;
+}
+
+.van-gallery-thumbs .thumb {
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  cursor: pointer;
+}
+
+.van-gallery-thumbs .thumb.is-active {
+  border-color: #ff8c38;
+}
+
+.van-gallery-thumbs img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
 }
 
 .van-detail h2 {

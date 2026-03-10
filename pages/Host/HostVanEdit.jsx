@@ -11,6 +11,8 @@ export default function HostVanEdit() {
     price: "",
     type: "simple",
     imageUrl: "",
+    galleryText: "",
+    gallery: [],
     description: "",
   });
   const [loading, setLoading] = React.useState(true);
@@ -30,6 +32,8 @@ export default function HostVanEdit() {
           price: data.price || "",
           type: data.type || "simple",
           imageUrl: data.imageUrl || "",
+          gallery: data.gallery || [],
+          galleryText: (data.gallery || []).join("\n"),
           description: data.description || "",
         });
       } catch (err) {
@@ -51,7 +55,14 @@ export default function HostVanEdit() {
     setSaving(true);
     setError(null);
     try {
-      await updateVan(id, form);
+      const payload = {
+        ...form,
+        gallery: form.galleryText
+          .split(/\n|,/)
+          .map((s) => s.trim())
+          .filter(Boolean),
+      };
+      await updateVan(id, payload);
       navigate(`/host/vans/${id}`);
     } catch (err) {
       setError(err);
@@ -102,6 +113,15 @@ export default function HostVanEdit() {
             value={form.imageUrl}
             onChange={handleChange}
             required
+          />
+        </label>
+        <label>
+          Gallery image URLs (one per line or comma-separated)
+          <textarea
+            name="galleryText"
+            rows={3}
+            value={form.galleryText}
+            onChange={handleChange}
           />
         </label>
         <label>

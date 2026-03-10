@@ -7,6 +7,7 @@ const initial = {
   price: "",
   type: "simple",
   imageUrl: "",
+  galleryText: "",
   description: "",
 };
 
@@ -16,6 +17,12 @@ export default function AddVan() {
   const [error, setError] = React.useState(null);
   const navigate = useNavigate();
   const uid = localStorage.getItem("uid") || "123";
+
+  const parseGallery = (text) =>
+    text
+      .split(/\n|,/)
+      .map((s) => s.trim())
+      .filter(Boolean);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -27,7 +34,11 @@ export default function AddVan() {
     setStatus("submitting");
     setError(null);
     try {
-      await addVan(form, uid);
+      const payload = {
+        ...form,
+        gallery: parseGallery(form.galleryText),
+      };
+      await addVan(payload, uid);
       setForm(initial);
       navigate("/host/vans");
     } catch (err) {
@@ -86,6 +97,16 @@ export default function AddVan() {
             onChange={handleChange}
             placeholder="https://..."
             required
+          />
+        </label>
+        <label>
+          Gallery image URLs (one per line or comma-separated)
+          <textarea
+            name="galleryText"
+            value={form.galleryText}
+            onChange={handleChange}
+            rows={3}
+            placeholder="https://.../photo1.jpg&#10;https://.../photo2.jpg"
           />
         </label>
         <label>

@@ -62,6 +62,7 @@ export async function addVan(data, hostId = "123") {
     ...data,
     hostId,
     price: Number(data.price || 0),
+    gallery: Array.isArray(data.gallery) ? data.gallery : [],
     createdAt: new Date().toISOString(),
   };
   const docRef = await addDoc(vansCollectionRef, payload);
@@ -72,6 +73,9 @@ export async function updateVan(id, data) {
   const docRef = doc(db, "vans", id);
   const payload = { ...data };
   if (payload.price !== undefined) payload.price = Number(payload.price);
+  if (payload.gallery && !Array.isArray(payload.gallery)) {
+    delete payload.gallery;
+  }
   await updateDoc(docRef, payload);
   return { id, ...payload };
 }
