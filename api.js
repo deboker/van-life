@@ -21,6 +21,12 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -34,6 +40,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 
 const vansCollectionRef = collection(db, "vans");
 
@@ -78,6 +85,31 @@ export async function updateVan(id, data) {
   }
   await updateDoc(docRef, payload);
   return { id, ...payload };
+}
+
+export async function uploadImages({ hostId, vanId, mainFile, galleryFiles = [] }) {
+  const base = `vans/${hostId || "public"}/${vanId || Date.now()}`;
+  const uploaded = { mainUrl: null, galleryUrls: [] };
+
+  async function uploadOne(file, path) {
+    const storageRef = ref(storage, path);
+    const snap = await uploadBytes(storageRef, file);
+    return await getDownloadURL(snap.ref);
+  }
+
+  if (mainFile) {
+    uploaded.mainUrl = await uploadOne(mainFile, `${base}/main-${mainFile.name}`);
+  }
+
+  if (galleryFiles?.length) {
+    for (let i = 0; i < galleryFiles.length; i++) {
+      const file = galleryFiles[i];
+      const url = await uploadOne(file, `${base}/gallery/${i}-${file.name}`);
+      uploaded.galleryUrls.push(url);
+    }
+  }
+
+  return uploaded;
 }
 
 export async function deleteVan(id) {

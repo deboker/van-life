@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { addVan } from "../../api";
+import { addVan, uploadImages } from "../../api";
 
 const initial = {
   name: "",
@@ -13,6 +13,8 @@ const initial = {
 
 export default function AddVan() {
   const [form, setForm] = React.useState(initial);
+  const [mainFile, setMainFile] = React.useState(null);
+  const [galleryFiles, setGalleryFiles] = React.useState([]);
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
   const navigate = useNavigate();
@@ -34,12 +36,30 @@ export default function AddVan() {
     setStatus("submitting");
     setError(null);
     try {
+      const vanId = Date.now().toString();
+      let imageUrl = form.imageUrl;
+      let gallery = parseGallery(form.galleryText);
+
+      if (mainFile || galleryFiles.length) {
+        const uploaded = await uploadImages({
+          hostId: uid,
+          vanId,
+          mainFile,
+          galleryFiles,
+        });
+        if (uploaded.mainUrl) imageUrl = uploaded.mainUrl;
+        if (uploaded.galleryUrls.length) gallery = [...gallery, ...uploaded.galleryUrls];
+      }
+
       const payload = {
         ...form,
-        gallery: parseGallery(form.galleryText),
+        imageUrl,
+        gallery,
       };
       await addVan(payload, uid);
       setForm(initial);
+      setMainFile(null);
+      setGalleryFiles([]);
       navigate("/host/vans");
     } catch (err) {
       setError(err);
@@ -100,6 +120,14 @@ export default function AddVan() {
           />
         </label>
         <label>
+          Or upload main image
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setMainFile(e.target.files?.[0] || null)}
+          />
+        </label>
+        <label>
           Gallery image URLs (one per line or comma-separated)
           <textarea
             name="galleryText"
@@ -107,6 +135,15 @@ export default function AddVan() {
             onChange={handleChange}
             rows={3}
             placeholder="https://.../photo1.jpg&#10;https://.../photo2.jpg"
+          />
+        </label>
+        <label>
+          Or upload gallery images
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => setGalleryFiles(Array.from(e.target.files || []))}
           />
         </label>
         <label>

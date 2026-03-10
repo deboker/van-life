@@ -721,34 +721,44 @@ main {
 }
 
 .add-van-form button {
-  .host-van-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 12px;
-  }
+  justify-self: flex-start;
+  margin-top: 6px;
+}
 
-  .link-button.secondary {
-    background: transparent;
-    color: #161616;
-    border: 1px solid #161616;
-  }
+.host-van-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
 
-  .link-button.danger {
-    background: #d92d20;
-    color: white;
-  }
+.link-button.secondary {
+  background: transparent;
+  color: #161616;
+  border: 1px solid #161616;
+}
 
-  .van-edit {
-    padding: 0 26px;
-  }
+.link-button.danger {
+  background: #d92d20;
+  color: white;
+}
 
-  .van-edit-form {
+.van-edit {
+  padding: 0 26px;
+  margin: 20px 0 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.van-edit-form {
     display: grid;
-    gap: 14px;
-    max-width: 520px;
-  }
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px 22px;
+    max-width: 920px;
+    margin-top: 12px;
+}
 
-  .van-edit-form label {
+.van-edit-form label {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -757,19 +767,25 @@ main {
   }
 
   .van-edit-form input,
-  .van-edit-form select,
-  .van-edit-form textarea {
+.van-edit-form select,
+.van-edit-form textarea {
     border: 1px solid rgba(209, 213, 219);
     border-radius: 5px;
     padding: 10px;
     font-family: "Inter", sans-serif;
-  }
+}
 
-  .form-actions {
+.van-edit-form textarea {
+    grid-column: 1 / -1;
+    min-height: 130px;
+}
+
+.form-actions {
     display: flex;
     gap: 10px;
-  }
-  width: fit-content;
+    justify-content: flex-end;
+    grid-column: 1 / -1;
+    margin-top: 4px;
 }
 
 .host-van-detail .host-van-actions {

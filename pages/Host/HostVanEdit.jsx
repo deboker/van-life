@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getVan, updateVan } from "../../api";
+import { getVan, updateVan, uploadImages } from "../../api";
 
 export default function HostVanEdit() {
   const { id } = useParams();
@@ -15,6 +15,8 @@ export default function HostVanEdit() {
     gallery: [],
     description: "",
   });
+  const [mainFile, setMainFile] = React.useState(null);
+  const [galleryFiles, setGalleryFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -55,12 +57,27 @@ export default function HostVanEdit() {
     setSaving(true);
     setError(null);
     try {
+      let imageUrl = form.imageUrl;
+      let gallery = form.galleryText
+        .split(/\n|,/)
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      if (mainFile || galleryFiles.length) {
+        const uploaded = await uploadImages({
+          hostId: uid,
+          vanId: id,
+          mainFile,
+          galleryFiles,
+        });
+        if (uploaded.mainUrl) imageUrl = uploaded.mainUrl;
+        if (uploaded.galleryUrls.length) gallery = [...gallery, ...uploaded.galleryUrls];
+      }
+
       const payload = {
         ...form,
-        gallery: form.galleryText
-          .split(/\n|,/)
-          .map((s) => s.trim())
-          .filter(Boolean),
+        imageUrl,
+        gallery,
       };
       await updateVan(id, payload);
       navigate(`/host/vans/${id}`);
@@ -76,7 +93,12 @@ export default function HostVanEdit() {
 
   return (
     <section className="van-edit">
-      <h1>Edit van</h1>
+      <div className="add-van-head">
+        <h1>Edit van</h1>
+        <p className="muted">
+          Update photos, pricing, or copy. Changes go live immediately.
+        </p>
+      </div>
       <form className="van-edit-form" onSubmit={handleSubmit}>
         <label>
           Name
@@ -116,12 +138,29 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
+          Or upload new main image
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setMainFile(e.target.files?.[0] || null)}
+          />
+        </label>
+        <label>
           Gallery image URLs (one per line or comma-separated)
           <textarea
             name="galleryText"
             rows={3}
             value={form.galleryText}
             onChange={handleChange}
+          />
+        </label>
+        <label>
+          Or upload gallery images
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={(e) => setGalleryFiles(Array.from(e.target.files || []))}
           />
         </label>
         <label>
