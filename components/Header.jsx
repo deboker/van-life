@@ -74,9 +74,9 @@ export default function Header() {
                 </NavLink>
                 {isLoggedIn ? (
                     <>
-                        <div className="user-pill" aria-label="Logged in user">
+                        <Link to="/account" className="user-pill" onClick={closeMenu} aria-label="Account">
                             {userName || "You"}
-                        </div>
+                        </Link>
                         <button className="logout-btn" onClick={fakeLogOut}>Log out</button>
                     </>
                 ) : (

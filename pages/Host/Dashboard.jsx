@@ -8,6 +8,7 @@ export default function Dashboard() {
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
     const uid = localStorage.getItem("uid") || "123"
+    const name = localStorage.getItem("name") || "Host"
     React.useEffect(() => {
         setLoading(true)
         getHostVans(uid)
@@ -47,7 +48,7 @@ export default function Dashboard() {
         <>
             <section className="host-dashboard-earnings">
                 <div className="info">
-                    <h1>Welcome!</h1>
+                    <h1>Welcome, {name}!</h1>
                     <p>Income last <span>30 days</span></p>
                     <h2>$2,260</h2>
                 </div>

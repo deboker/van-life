@@ -17,6 +17,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
+  updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -83,6 +86,41 @@ async function fetchUserProfile(uid) {
   if (!uid) return null;
   const snap = await getDoc(doc(db, "users", uid));
   return snap.exists() ? snap.data() : null;
+}
+
+export async function getUserProfile(uid) {
+  const profile = await fetchUserProfile(uid);
+  if (profile) return { id: uid, ...profile };
+  const user = auth.currentUser;
+  return {
+    id: uid,
+    name: user?.displayName || "",
+    email: user?.email || "",
+  };
+}
+
+export async function updateUserProfile(uid, { name }) {
+  if (!uid) throw new Error("Missing user id");
+  const updates = {};
+  if (name !== undefined) updates.name = name;
+  if (Object.keys(updates).length) {
+    await setDoc(doc(db, "users", uid), updates, { merge: true });
+    if (auth.currentUser) {
+      await updateProfile(auth.currentUser, { displayName: updates.name });
+    }
+  }
+  return { id: uid, ...updates };
+}
+
+export async function changePassword(currentPassword, newPassword) {
+  const user = auth.currentUser;
+  if (!user || !user.email) {
+    throw new Error("You must be logged in to change password");
+  }
+  const credential = EmailAuthProvider.credential(user.email, currentPassword);
+  await reauthenticateWithCredential(user, credential);
+  await updatePassword(user, newPassword);
+  return true;
 }
 
 export async function registerUser({ name, email, password }) {

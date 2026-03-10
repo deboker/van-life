@@ -20,6 +20,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Register from "./pages/Register";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
@@ -52,6 +53,7 @@ function App() {
           <Route path="cookies" element={<Cookies />} />
 
           <Route element={<AuthRequired />}>
+            <Route path="account" element={<Account />} />
             <Route path="host" element={<HostLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="income" element={<Income />} />

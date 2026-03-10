@@ -87,6 +87,12 @@ header .login-link {
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1;
+  text-decoration: none;
+  border: 1px solid #ffb776;
+}
+
+.user-pill:hover {
+  text-decoration: underline;
 }
 
 header .site-nav {
@@ -1729,6 +1735,65 @@ img.graph {
 .host-reviews .review-star {
   color: #ff8c38;
   margin-right: 5px;
+}
+
+/* Account */
+.account-page {
+  padding: 0 26px;
+  margin: 3rem 0;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 1.5rem;
+}
+
+.account-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.account-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #161616;
+}
+
+.account-form input {
+  padding: 10px 12px;
+  border: 1px solid #c7c7c7;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.form-note {
+  margin: 0;
+  color: #4d4d4d;
+  font-size: 0.95rem;
+}
+
+.form-note.success {
+  color: #0c7a35;
 }
 
 @media (max-width: 768px) {
