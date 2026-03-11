@@ -52,7 +52,10 @@ export default function Home() {
       setLoadingFeat(true);
       try {
         const data = await getVans();
-        setFeatured(data.slice(0, 3));
+        const shuffled = [...data]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        setFeatured(shuffled);
       } catch (err) {
         setErrorFeat(err);
       } finally {
@@ -243,7 +246,11 @@ export default function Home() {
       <section className="confidence-cta">
         <div>
           <p className="eyebrow">Book with confidence</p>
-          <h2>Your destination is waiting.<br />Your van is ready.</h2>
+          <h2>
+            Your destination is waiting.
+            <br />
+            Your van is ready.
+          </h2>
         </div>
         <Link to="vans" className="link-button">
           Explore our vans
