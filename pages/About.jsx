@@ -45,6 +45,15 @@ export default function About() {
                     <h2>Real humans, fast replies</h2>
                     <p>Trip changes? We respond quickly so you can stay focused on the road.</p>
                 </div>
+                <div
+                    className="highlight highlight-photo"
+                    style={{
+                        backgroundImage:
+                            "url(https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80)"
+                    }}
+                >
+                    <span className="visually-hidden">Community on the road</span>
+                </div>
             </section>
             <section className="home-steps">
                 <div className="steps-head">

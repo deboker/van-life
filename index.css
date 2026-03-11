@@ -500,7 +500,7 @@ main {
 .home-highlights {
   margin: 2.5rem 0 4rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -510,6 +510,38 @@ main {
   padding: 1.6rem 1.4rem;
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
   color: #161616;
+}
+
+.highlight-photo {
+  padding: 0;
+  min-height: 240px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white;
+}
+
+.highlight-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.2));
+}
+
+.highlight-photo .visually-hidden {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.highlight-img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  margin: 0 0 12px;
+  aspect-ratio: 4 / 3;
 }
 
 .highlight .eyebrow {
@@ -537,6 +569,18 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (max-width: 989px) {
+  .home-highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 522px) {
+  .home-highlights {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cta-tile h3 {
@@ -625,6 +669,7 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  aspect-ratio: 4 / 3;
 }
 
 .featured-meta {
@@ -1116,6 +1161,7 @@ main {
   height: 60vh;
   background-size: cover;
   background-position: center;
+  border-radius: 10px;
 }
 
 .about-page-content {
@@ -1167,7 +1213,7 @@ main {
 
 /*** VAN PAGES ***/
 .van-list-container {
-  padding-inline: 23px;
+  padding-inline: 8px;
 }
 
 .van-list-filter-buttons {
@@ -1279,7 +1325,7 @@ i[class*="van-type-"] {
 }
 
 .van-detail-container {
-  padding-inline: 27px;
+  padding-inline: 8px;
 }
 
 .van-detail-container .back-button {
@@ -1892,7 +1938,8 @@ img.graph {
   .van-list {
     gap: 20px;
   }
-  .van-list-container {
+  .van-list-container,
+  .van-detail-container {
     padding-inline: 0;
   }
 }
