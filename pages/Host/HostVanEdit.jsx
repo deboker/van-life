@@ -183,7 +183,14 @@ export default function HostVanEdit() {
             Cancel
           </button>
           <button className="link-button" type="submit" disabled={saving}>
-            {saving ? "Saving..." : "Save changes"}
+            {saving ? (
+              <>
+                <span className="btn-spinner" aria-hidden="true" />
+                Saving...
+              </>
+            ) : (
+              "Save changes"
+            )}
           </button>
         </div>
       </form>

@@ -164,7 +164,14 @@ export default function AddVan() {
           type="submit"
           disabled={status === "submitting"}
         >
-          {status === "submitting" ? "Saving..." : "Publish van"}
+          {status === "submitting" ? (
+            <>
+              <span className="btn-spinner" aria-hidden="true" />
+              Saving...
+            </>
+          ) : (
+            "Publish van"
+          )}
         </button>
       </form>
     </section>
