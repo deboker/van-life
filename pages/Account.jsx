@@ -2,7 +2,7 @@ import React from "react"
 import { getUserProfile, updateUserProfile, changePassword } from "../api"
 
 export default function Account() {
-  const [profile, setProfile] = React.useState({ name: "", email: "" })
+  const [profile, setProfile] = React.useState({ name: "", email: "", role: "najomca" })
   const [loadingProfile, setLoadingProfile] = React.useState(true)
   const [savingProfile, setSavingProfile] = React.useState(false)
   const [pwStatus, setPwStatus] = React.useState("idle")
@@ -18,7 +18,11 @@ export default function Account() {
       try {
         const data = await getUserProfile(uid)
         if (!active) return
-        setProfile({ name: data?.name || "", email: data?.email || "" })
+        setProfile({
+          name: data?.name || "",
+          email: data?.email || "",
+          role: data?.role || localStorage.getItem("role") || "najomca",
+        })
       } catch (err) {
         console.error(err)
       } finally {
@@ -77,16 +81,16 @@ export default function Account() {
 
   return (
     <main className="account-page">
-      <h1>Your account</h1>
+      <h1>Váš účet</h1>
       <div className="account-grid">
         <section className="account-card">
           <div className="card-head">
-            <h2>Profile</h2>
-            {loadingProfile && <span className="muted">Loading…</span>}
+            <h2>Profil</h2>
+            {loadingProfile && <span className="muted">Načítavam…</span>}
           </div>
           <form className="account-form" onSubmit={handleSaveProfile}>
             <label>
-              <span>Name</span>
+              <span>Meno</span>
               <input
                 name="name"
                 type="text"
@@ -106,9 +110,10 @@ export default function Account() {
                 disabled
               />
             </label>
+            <p className="muted">Rola: {profile.role === "hostitel" ? "Hostiteľ" : "Nájomca"}</p>
             <div className="form-actions">
               <button type="submit" disabled={savingProfile}>
-                {savingProfile ? "Saving…" : "Save changes"}
+                {savingProfile ? "Ukladám…" : "Uložiť zmeny"}
               </button>
               {profileMsg && <p className="form-note">{profileMsg}</p>}
             </div>
@@ -117,29 +122,38 @@ export default function Account() {
 
         <section className="account-card">
           <div className="card-head">
-            <h2>Security</h2>
+            <h2>Bezpečnosť</h2>
           </div>
           <form className="account-form" onSubmit={handleChangePassword}>
             <label>
-              <span>Current password</span>
+              <span>Aktuálne heslo</span>
               <input name="currentPassword" type="password" required autoComplete="current-password" />
             </label>
             <label>
-              <span>New password</span>
+              <span>Nové heslo</span>
               <input name="newPassword" type="password" required minLength={6} autoComplete="new-password" />
             </label>
             <label>
-              <span>Confirm new password</span>
+              <span>Potvrď nové heslo</span>
               <input name="confirmPassword" type="password" required minLength={6} autoComplete="new-password" />
             </label>
             {pwError && <p className="login-error">{pwError.message}</p>}
             {pwMsg && <p className="form-note success">{pwMsg}</p>}
             <div className="form-actions">
               <button type="submit" disabled={pwStatus === "submitting"}>
-                {pwStatus === "submitting" ? "Updating…" : "Change password"}
+                {pwStatus === "submitting" ? "Aktualizujem…" : "Zmeniť heslo"}
               </button>
             </div>
           </form>
+        </section>
+
+        <section className="account-card">
+          <div className="card-head">
+            <h2>Moje rezervácie</h2>
+          </div>
+          <div className="form-note">
+            Prehľad rezervácií bude čoskoro. Zatiaľ môžete spravovať profil a heslo.
+          </div>
         </section>
       </div>
     </main>
