@@ -14,6 +14,8 @@ export default function HostVanEdit() {
     galleryText: "",
     gallery: [],
     description: "",
+    unavailable: [],
+    unavailableText: "",
   });
   const [mainFile, setMainFile] = React.useState(null);
   const [galleryFiles, setGalleryFiles] = React.useState([]);
@@ -37,6 +39,11 @@ export default function HostVanEdit() {
           gallery: data.gallery || [],
           galleryText: (data.gallery || []).join("\n"),
           description: data.description || "",
+          unavailable: data.unavailable || [],
+          unavailableText: (data.unavailable || [])
+            .map((r) => r?.start && r?.end ? `${r.start} to ${r.end}` : "")
+            .filter(Boolean)
+            .join("\n"),
         });
       } catch (err) {
         setError(err);
@@ -62,6 +69,16 @@ export default function HostVanEdit() {
         .split(/\n|,/)
         .map((s) => s.trim())
         .filter(Boolean);
+      const unavailable = form.unavailableText
+        .split(/\n/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+          const [start, end] = line.split(/\s+to\s+|\s*-\s*|,\s*/i).map((s) => s.trim());
+          if (start && end) return { start, end };
+          return null;
+        })
+        .filter(Boolean);
 
       if (mainFile || galleryFiles.length) {
         const uploaded = await uploadImages({
@@ -78,6 +95,7 @@ export default function HostVanEdit() {
         ...form,
         imageUrl,
         gallery,
+        unavailable,
       };
       await updateVan(id, payload);
       navigate(`/host/vans/${id}`);
@@ -152,6 +170,16 @@ export default function HostVanEdit() {
             rows={3}
             value={form.galleryText}
             onChange={handleChange}
+          />
+        </label>
+        <label>
+          Blokované dátumy (po riadkoch, formát YYYY-MM-DD to YYYY-MM-DD)
+          <textarea
+            name="unavailableText"
+            rows={3}
+            value={form.unavailableText}
+            onChange={handleChange}
+            placeholder="2026-04-01 to 2026-04-05"
           />
         </label>
         <label>

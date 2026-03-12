@@ -2121,3 +2121,15 @@ img.graph {
   padding: 10px;
   font-size: 1rem;
 }
+
+.booking-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.pill.danger {
+  background: #e25b52;
+  color: #fff;
+}

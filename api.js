@@ -140,6 +140,20 @@ export async function getHostBookings(uid) {
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
+export async function getBookingsForVan(vanId) {
+  if (!vanId) return [];
+  const q = query(bookingsCollectionRef, where("vanId", "==", vanId));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function updateBookingStatus(id, status) {
+  if (!id) throw new Error("Missing booking id");
+  const ref = doc(db, "bookings", id);
+  await updateDoc(ref, { status });
+  return true;
+}
+
 export async function createBooking({
   vanId,
   vanName,

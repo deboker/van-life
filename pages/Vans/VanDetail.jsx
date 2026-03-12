@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom"
-import { getVan, createBooking } from "../../api"
+import { getVan, createBooking, getBookingsForVan } from "../../api"
 
 export default function VanDetail() {
     const [van, setVan] = React.useState(null)
@@ -15,6 +15,7 @@ export default function VanDetail() {
     const [bookingMsg, setBookingMsg] = React.useState("")
     const [bookingError, setBookingError] = React.useState(null)
     const [bookingLoading, setBookingLoading] = React.useState(false)
+    const [existingBookings, setExistingBookings] = React.useState([])
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
@@ -26,6 +27,8 @@ export default function VanDetail() {
                 const data = await getVan(id)
                 setVan(data)
                 setActiveIndex(0)
+                const bookings = await getBookingsForVan(id)
+                setExistingBookings(bookings)
             } catch (err) {
                 setError(err)
             } finally {
@@ -138,6 +141,23 @@ export default function VanDetail() {
                                 )
                             )
                             const totalPrice = nights * (van?.price || 0)
+                            // dostupnosť: blokované intervaly a existujúce rezervácie (okrem cancelled)
+                            const overlaps = (aStart, aEnd, bStart, bEnd) =>
+                                new Date(aStart) <= new Date(bEnd) && new Date(aEnd) >= new Date(bStart)
+                            const blockedRanges = [
+                                ...(van?.unavailable || []),
+                                ...existingBookings.filter((b) => b.status !== "cancelled").map((b) => ({
+                                    start: b.startDate,
+                                    end: b.endDate,
+                                })),
+                            ]
+                            const conflict = blockedRanges.some((r) =>
+                                overlaps(booking.startDate, booking.endDate, r.start, r.end)
+                            )
+                            if (conflict) {
+                                setBookingError(new Error("Vybrané dátumy nie sú dostupné. Skúste iný termín."))
+                                return
+                            }
                             try {
                                 setBookingLoading(true)
                                 await createBooking({

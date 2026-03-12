@@ -1,10 +1,11 @@
 import React from "react"
-import { getHostBookings } from "../../api"
+import { getHostBookings, updateBookingStatus } from "../../api"
 
 export default function HostBookings() {
   const [items, setItems] = React.useState([])
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
+  const [savingId, setSavingId] = React.useState(null)
   const uid = typeof window !== "undefined" ? localStorage.getItem("uid") : null
 
   React.useEffect(() => {
@@ -47,6 +48,46 @@ export default function HostBookings() {
               {b.renterEmail && <p>Nájomca: {b.renterEmail}</p>}
               {b.pickupCity && <p>Prevzatie: {b.pickupCity}</p>}
               {b.totalPrice && <p>Cena: €{b.totalPrice}</p>}
+              <div className="booking-actions">
+                <button
+                  className="pill primary"
+                  disabled={savingId === b.id}
+                  onClick={async () => {
+                    setSavingId(b.id)
+                    try {
+                      await updateBookingStatus(b.id, "confirmed")
+                      setItems((prev) =>
+                        prev.map((x) => (x.id === b.id ? { ...x, status: "confirmed" } : x))
+                      )
+                    } catch (err) {
+                      setError(err)
+                    } finally {
+                      setSavingId(null)
+                    }
+                  }}
+                >
+                  Potvrdiť
+                </button>
+                <button
+                  className="pill danger"
+                  disabled={savingId === b.id}
+                  onClick={async () => {
+                    setSavingId(b.id)
+                    try {
+                      await updateBookingStatus(b.id, "cancelled")
+                      setItems((prev) =>
+                        prev.map((x) => (x.id === b.id ? { ...x, status: "cancelled" } : x))
+                      )
+                    } catch (err) {
+                      setError(err)
+                    } finally {
+                      setSavingId(null)
+                    }
+                  }}
+                >
+                  Zrušiť
+                </button>
+              </div>
             </div>
           ))}
         </div>
