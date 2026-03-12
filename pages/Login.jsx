@@ -1,12 +1,13 @@
 import React from "react"
 import { useLocation, useNavigate, Link } from "react-router-dom"
-import { loginUser } from "../api"
+import { loginUser, requestPasswordReset } from "../api"
 
 export default function Login() {
     const [loginFormData, setLoginFormData] = React.useState({ email: "", password: "" })
     const [showPw, setShowPw] = React.useState(false)
     const [status, setStatus] = React.useState("idle")
     const [error, setError] = React.useState(null)
+    const [resetInfo, setResetInfo] = React.useState("")
 
     const location = useLocation()
     const navigate = useNavigate()
@@ -17,6 +18,7 @@ export default function Login() {
         e.preventDefault()
         setStatus("submitting")
         setError(null)
+        setResetInfo("")
         try {
             const data = await loginUser(loginFormData)
             if (data && data.emailVerified === false) {
@@ -48,6 +50,18 @@ export default function Login() {
         }))
     }
 
+    async function handleReset(e) {
+        e.preventDefault()
+        setError(null)
+        setResetInfo("")
+        try {
+            await requestPasswordReset(loginFormData.email)
+            setResetInfo("Odoslali sme e‑mail s odkazom na obnovenie hesla.")
+        } catch (err) {
+            setError(err)
+        }
+    }
+
     return (
         <div className="login-container">
             {
@@ -59,6 +73,7 @@ export default function Login() {
                 error?.message &&
                     <h3 className="login-error">{error.message}</h3>
             }
+            {resetInfo && <p className="login-success">{resetInfo}</p>}
 
             <form onSubmit={handleSubmit} className="login-form">
                 <input
@@ -94,6 +109,9 @@ export default function Login() {
                     }
                 </button>
             </form>
+            <button className="text-link" onClick={handleReset} style={{ marginTop: "0.5rem" }}>
+                Zabudli ste heslo? Pošleme odkaz na e‑mail
+            </button>
             <p className="login-switch">
                 Nemáte účet? <Link to="/register">Vytvorte si ho</Link>
             </p>

@@ -20,6 +20,7 @@ import {
   updatePassword,
   sendEmailVerification,
   reload,
+  sendPasswordResetEmail,
   signOut,
   EmailAuthProvider,
   reauthenticateWithCredential,
@@ -295,4 +296,13 @@ export async function loginUser({ email, password }) {
       throw err;
     }
   }
+}
+
+export async function requestPasswordReset(email) {
+  if (!email) throw new Error("Zadajte e‑mail na obnovenie hesla");
+  await sendPasswordResetEmail(auth, email, {
+    url: window?.location?.origin || "https://van-life-react-andrey.netlify.app/",
+    handleCodeInApp: false,
+  });
+  return true;
 }
