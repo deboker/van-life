@@ -65,6 +65,15 @@ export default function Header() {
                         Host
                     </NavLink>
                 )}
+                {isLoggedIn && role !== "hostitel" && (
+                    <NavLink
+                        to="/account/bookings"
+                        onClick={closeMenu}
+                        style={({ isActive }) => isActive ? activeStyles : null}
+                    >
+                        Rezervácie
+                    </NavLink>
+                )}
                 {isLoggedIn && (
                     <NavLink
                         to="/account"

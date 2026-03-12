@@ -21,10 +21,12 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import Register from "./pages/Register";
 import Account from "./pages/Account";
+import Bookings from "./pages/Bookings";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
 import AuthRequired from "./components/AuthRequired";
+import HostBookings from "./pages/Host/Bookings";
 
 import "./server";
 
@@ -54,10 +56,12 @@ function App() {
 
           <Route element={<AuthRequired />}>
             <Route path="account" element={<Account />} />
+            <Route path="account/bookings" element={<Bookings />} />
             <Route path="host" element={<HostLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="income" element={<Income />} />
               <Route path="reviews" element={<Reviews />} />
+              <Route path="bookings" element={<HostBookings />} />
               <Route path="vans" element={<HostVans />} />
               <Route path="vans/new" element={<AddVan />} />
               <Route path="vans/:id" element={<HostVanDetail />}>

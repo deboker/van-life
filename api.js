@@ -49,6 +49,7 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 
 const vansCollectionRef = collection(db, "vans");
+const bookingsCollectionRef = collection(db, "bookings");
 
 export async function getVans() {
   const snapshot = await getDocs(vansCollectionRef);
@@ -122,6 +123,21 @@ export async function deleteVan(id) {
   const docRef = doc(db, "vans", id);
   await deleteDoc(docRef);
   return true;
+}
+
+// Bookings
+export async function getRenterBookings(uid) {
+  if (!uid) return [];
+  const q = query(bookingsCollectionRef, where("renterId", "==", uid));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function getHostBookings(uid) {
+  if (!uid) return [];
+  const q = query(bookingsCollectionRef, where("hostId", "==", uid));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
 async function fetchUserProfile(uid) {

@@ -48,6 +48,12 @@ export default function HostLayout() {
                     >
                         Recenzie
                     </NavLink>
+                    <NavLink
+                        to="bookings"
+                        style={({ isActive }) => isActive ? activeStyles : null}
+                    >
+                        Rezervácie
+                    </NavLink>
                 </nav>
             </div>
             <Outlet />

@@ -2055,3 +2055,36 @@ img.graph {
     padding-inline: 0;
   }
 }
+
+.booking-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.booking-card {
+  border: 1px solid #ffe2c8;
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: #fffaf3;
+}
+
+.booking-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.status-pending { background: #fff1c7; color: #946200; }
+.status-confirmed { background: #d9f7c5; color: #2b6b1f; }
+.status-cancelled { background: #ffe0e0; color: #a12222; }
