@@ -146,15 +146,6 @@ export default function Account() {
             </div>
           </form>
         </section>
-
-        <section className="account-card">
-          <div className="card-head">
-            <h2>Moje rezervácie</h2>
-          </div>
-          <div className="form-note">
-            Prehľad rezervácií bude čoskoro. Zatiaľ môžete spravovať profil a heslo.
-          </div>
-        </section>
       </div>
     </main>
   )
