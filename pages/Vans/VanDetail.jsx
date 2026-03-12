@@ -101,7 +101,7 @@ export default function VanDetail() {
                         </div>
                     )}
                     <i className={`van-type ${van.type} selected`}>
-                        {van.type}
+                        {{ simple: "Jednoduché", rugged: "Do terénu", luxury: "Luxusné" }[van.type] || van.type}
                     </i>
                     <h2>{van.name}</h2>
                     <p className="van-price"><span>€{van.price}</span>/deň</p>

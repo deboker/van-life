@@ -44,7 +44,9 @@ export default function Vans() {
                     <h3>{van.name}</h3>
                     <p>€{van.price}<span>/deň</span></p>
                 </div>
-                <i className={`van-type ${van.type} selected`}>{van.type}</i>
+                <i className={`van-type ${van.type} selected`}>
+                    {{ simple: "Jednoduché", rugged: "Do terénu", luxury: "Luxusné" }[van.type] || van.type}
+                </i>
             </Link>
         </div>
     ))

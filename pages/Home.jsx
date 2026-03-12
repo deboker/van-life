@@ -134,15 +134,15 @@ export default function Home() {
                 <div className="featured-img-skeleton">
                   {van && <img src={van.imageUrl} alt={van?.name} />}
                 </div>
-                <div className="featured-meta">
-                  <div>
-                    <p className="van-name">{van?.name || "Načítavam..."}</p>
-                    {van && (
-                      <span className={`van-type-pill ${van.type}`}>
-                        {van.type}
-                      </span>
-                    )}
-                  </div>
+            <div className="featured-meta">
+              <div>
+                <p className="van-name">{van?.name || "Načítavam..."}</p>
+                {van && (
+                  <span className={`van-type-pill ${van.type}`}>
+                        {{ simple: "Jednoduché", rugged: "Do terénu", luxury: "Luxusné" }[van.type] || van.type}
+                  </span>
+                )}
+              </div>
                   <div className="price">
                     {van ? (
                       <>

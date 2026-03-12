@@ -55,7 +55,7 @@ export default function HostVanDetail() {
                             <i
                                 className={`van-type van-type-${currentVan.type}`}
                             >
-                                {currentVan.type}
+                                {{ simple: "Jednoduché", rugged: "Do terénu", luxury: "Luxusné" }[currentVan.type] || currentVan.type}
                             </i>
                             <h3>{currentVan.name}</h3>
                             <h4>€{currentVan.price}/deň</h4>

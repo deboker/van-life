@@ -123,9 +123,9 @@ export default function HostVanEdit() {
         <label>
           Typ
           <select name="type" value={form.type} onChange={handleChange}>
-            <option value="simple">Simple</option>
-            <option value="rugged">Rugged</option>
-            <option value="luxury">Luxury</option>
+            <option value="simple">Jednoduché</option>
+            <option value="rugged">Do terénu</option>
+            <option value="luxury">Luxusné</option>
           </select>
         </label>
         <label>
