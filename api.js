@@ -140,6 +140,36 @@ export async function getHostBookings(uid) {
   return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
+export async function createBooking({
+  vanId,
+  vanName,
+  hostId,
+  renterId,
+  renterEmail,
+  startDate,
+  endDate,
+  pickupCity,
+  totalPrice,
+}) {
+  if (!renterId) throw new Error("Musíte byť prihlásený");
+  if (!vanId || !startDate || !endDate) throw new Error("Chýbajú údaje rezervácie");
+  const payload = {
+    vanId,
+    vanName: vanName || "",
+    hostId: hostId || "",
+    renterId,
+    renterEmail: renterEmail || "",
+    startDate,
+    endDate,
+    pickupCity: pickupCity || "",
+    totalPrice: totalPrice || null,
+    status: "pending",
+    createdAt: new Date().toISOString(),
+  };
+  const docRef = await addDoc(bookingsCollectionRef, payload);
+  return { id: docRef.id, ...payload };
+}
+
 async function fetchUserProfile(uid) {
   if (!uid) return null;
   const snap = await getDoc(doc(db, "users", uid));

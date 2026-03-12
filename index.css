@@ -2088,3 +2088,36 @@ img.graph {
 .status-pending { background: #fff1c7; color: #946200; }
 .status-confirmed { background: #d9f7c5; color: #2b6b1f; }
 .status-cancelled { background: #ffe0e0; color: #a12222; }
+
+.booking-form {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #ffe2c8;
+  border-radius: 10px;
+  background: #fffaf3;
+}
+
+.booking-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.booking-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+  color: #161616;
+}
+
+.booking-form input[type="date"],
+.booking-form input[type="text"] {
+  border: 1px solid #c8c8c8;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 1rem;
+}

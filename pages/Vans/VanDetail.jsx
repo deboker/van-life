@@ -1,14 +1,23 @@
 import React from "react"
-import { Link, useParams, useLocation } from "react-router-dom"
-import { getVan } from "../../api"
+import { Link, useParams, useLocation, useNavigate } from "react-router-dom"
+import { getVan, createBooking } from "../../api"
 
 export default function VanDetail() {
     const [van, setVan] = React.useState(null)
     const [activeIndex, setActiveIndex] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
+    const [booking, setBooking] = React.useState({
+        startDate: "",
+        endDate: "",
+        pickupCity: "",
+    })
+    const [bookingMsg, setBookingMsg] = React.useState("")
+    const [bookingError, setBookingError] = React.useState(null)
+    const [bookingLoading, setBookingLoading] = React.useState(false)
     const { id } = useParams()
     const location = useLocation()
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         async function loadVans() {
@@ -106,7 +115,86 @@ export default function VanDetail() {
                     <h2>{van.name}</h2>
                     <p className="van-price"><span>€{van.price}</span>/deň</p>
                     <p>{van.description}</p>
-                    <button className="link-button">Prenajať túto dodávku</button>
+                    <form
+                        className="booking-form"
+                        onSubmit={async (e) => {
+                            e.preventDefault()
+                            setBookingError(null)
+                            setBookingMsg("")
+                            const uid = localStorage.getItem("uid")
+                            const email = localStorage.getItem("email") || van?.renterEmail
+                            if (!uid) {
+                                navigate("/login", { state: { message: "Najprv sa prihláste, aby ste mohli rezervovať." } })
+                                return
+                            }
+                            if (!booking.startDate || !booking.endDate) {
+                                setBookingError(new Error("Vyberte dátumy."))
+                                return
+                            }
+                            const nights = Math.max(
+                                1,
+                                Math.round(
+                                    (new Date(booking.endDate) - new Date(booking.startDate)) / (1000 * 60 * 60 * 24)
+                                )
+                            )
+                            const totalPrice = nights * (van?.price || 0)
+                            try {
+                                setBookingLoading(true)
+                                await createBooking({
+                                    vanId: van.id,
+                                    vanName: van.name,
+                                    hostId: van.hostId,
+                                    renterId: uid,
+                                    renterEmail: email || "",
+                                    startDate: booking.startDate,
+                                    endDate: booking.endDate,
+                                    pickupCity: booking.pickupCity,
+                                    totalPrice,
+                                })
+                                setBookingMsg("Rezervácia vytvorená. Hostiteľ vás bude kontaktovať.")
+                                setBooking({ startDate: "", endDate: "", pickupCity: "" })
+                            } catch (err) {
+                                setBookingError(err)
+                            } finally {
+                                setBookingLoading(false)
+                            }
+                        }}
+                    >
+                        <div className="booking-row">
+                            <label>
+                                Od
+                                <input
+                                    type="date"
+                                    value={booking.startDate}
+                                    onChange={(e) => setBooking((p) => ({ ...p, startDate: e.target.value }))}
+                                    required
+                                />
+                            </label>
+                            <label>
+                                Do
+                                <input
+                                    type="date"
+                                    value={booking.endDate}
+                                    onChange={(e) => setBooking((p) => ({ ...p, endDate: e.target.value }))}
+                                    required
+                                />
+                            </label>
+                        </div>
+                        <label>
+                            Mesto prevzatia
+                            <input
+                                type="text"
+                                placeholder="Bratislava, Košice…"
+                                value={booking.pickupCity}
+                                onChange={(e) => setBooking((p) => ({ ...p, pickupCity: e.target.value }))}
+                            />
+                        </label>
+                        {bookingError && <p className="login-error">{bookingError.message}</p>}
+                        {bookingMsg && <p className="form-note success">{bookingMsg}</p>}
+                        <button className="link-button" type="submit" disabled={bookingLoading}>
+                            {bookingLoading ? "Rezervujem..." : "Rezervovať túto dodávku"}
+                        </button>
+                    </form>
                 </div>
             )}
         </div>
