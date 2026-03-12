@@ -165,17 +165,26 @@ export async function changePassword(currentPassword, newPassword) {
   return true;
 }
 
-export async function registerUser({ name, email, password }) {
+export async function registerUser({ firstName, lastName, email, password, phone, role }) {
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
-    if (name) {
-      await updateProfile(cred.user, { displayName: name });
-      await setDoc(doc(db, "users", cred.user.uid), {
-        name,
-        email,
-        createdAt: new Date().toISOString(),
-      });
+    const displayName = [firstName, lastName].filter(Boolean).join(" ").trim();
+    if (displayName) {
+      await updateProfile(cred.user, { displayName });
     }
+    await setDoc(
+      doc(db, "users", cred.user.uid),
+      {
+        firstName: firstName || "",
+        lastName: lastName || "",
+        name: displayName || "",
+        email,
+        phone: phone || "",
+        role: role || "najomca",
+        createdAt: new Date().toISOString(),
+      },
+      { merge: true }
+    );
     // po vytvorení odošleme overovací e‑mail
     const actionCodeSettings = {
       url: window?.location?.origin || "https://van-life-react-andrey.netlify.app/",
@@ -194,7 +203,7 @@ export async function registerUser({ name, email, password }) {
     return {
       uid: cred.user.uid,
       email: cred.user.email,
-      name: name || cred.user.displayName || "",
+      name: displayName || cred.user.displayName || "",
       emailVerificationSent: true,
     };
   } catch (err) {

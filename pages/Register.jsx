@@ -3,7 +3,14 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../api";
 
 export default function Register() {
-  const [form, setForm] = React.useState({ name: "", email: "", password: "" });
+  const [form, setForm] = React.useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
+    role: "najomca",
+  });
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
   const [info, setInfo] = React.useState("");
@@ -31,8 +38,9 @@ export default function Register() {
       localStorage.setItem("loggedin", true);
       if (res?.uid) localStorage.setItem("uid", res.uid);
       else if (res?.user?.id) localStorage.setItem("uid", res.user.id);
-      if (res?.name || form.name) {
-        localStorage.setItem("name", res?.name || form.name);
+      const displayName = [form.firstName, form.lastName].filter(Boolean).join(" ").trim();
+      if (res?.name || displayName) {
+        localStorage.setItem("name", res?.name || displayName);
       }
       navigate(from, { replace: true });
     } catch (err) {
@@ -49,13 +57,22 @@ export default function Register() {
       {info && <p className="login-success">{info}</p>}
       <form onSubmit={handleSubmit} className="login-form">
         <input
-          name="name"
+          name="firstName"
           onChange={handleChange}
           type="text"
-          placeholder="Celé meno"
-          value={form.name}
+          placeholder="Meno"
+          value={form.firstName}
           required
-          autoComplete="name"
+          autoComplete="given-name"
+        />
+        <input
+          name="lastName"
+          onChange={handleChange}
+          type="text"
+          placeholder="Priezvisko"
+          value={form.lastName}
+          required
+          autoComplete="family-name"
         />
         <input
           name="email"
@@ -66,6 +83,21 @@ export default function Register() {
           required
           autoComplete="email"
         />
+        <input
+          name="phone"
+          onChange={handleChange}
+          type="tel"
+          placeholder="Telefón (voliteľné)"
+          value={form.phone}
+          autoComplete="tel"
+        />
+        <label className="select-label">
+          Ste hostiteľ alebo nájomca?
+          <select name="role" value={form.role} onChange={handleChange}>
+            <option value="najomca">Nájomca</option>
+            <option value="hostitel">Hostiteľ</option>
+          </select>
+        </label>
         <input
           name="password"
           onChange={handleChange}
@@ -81,7 +113,7 @@ export default function Register() {
             checked={showPw}
             onChange={(e) => setShowPw(e.target.checked)}
           />
-          <span>Show password</span>
+          <span>Zobraziť heslo</span>
         </label>
         <button disabled={status === "submitting"}>
           {status === "submitting" ? "Vytváram..." : "Vytvoriť účet"}

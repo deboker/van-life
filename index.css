@@ -1708,6 +1708,48 @@ i[class*="van-type-"] {
   color: red;
 }
 
+.text-link {
+  margin-top: 2rem !important;
+  background: transparent;
+  border: 1px solid #ffb776;
+  color: #161616;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 400;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.text-link:hover {
+  transform: translateY(-1px);
+}
+
+.text-link:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-switch a {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid #ffb776;
+  color: #161616;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.login-switch a:hover {
+  transform: translateY(-1px);
+}
+
 .pw-toggle {
   display: flex;
   align-items: center;
@@ -1719,6 +1761,24 @@ i[class*="van-type-"] {
 
 .pw-toggle input[type="checkbox"] {
   accent-color: #ff8c38;
+}
+
+.login-form select {
+  width: 100%;
+  border: 1px solid #c8c8c8;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 1rem;
+  background: white;
+}
+
+.select-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: #4d4d4d;
+  margin-top: 6px;
 }
 
 .host-dashboard-earnings {
