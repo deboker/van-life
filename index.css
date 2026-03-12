@@ -54,6 +54,7 @@ header .site-logo {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  padding: 0 0 0 2%;
 }
 
 .site-logo {
@@ -406,6 +407,9 @@ main {
     bottom: 10px;
     left: 10px;
     right: 10px;
+  }
+  header .site-logo {
+    padding: 0;
   }
 }
 
