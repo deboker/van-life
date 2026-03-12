@@ -165,6 +165,7 @@ export async function createBooking({
   endDate,
   pickupCity,
   totalPrice,
+  note,
 }) {
   if (!renterId) throw new Error("Musíte byť prihlásený");
   if (!vanId || !startDate || !endDate) throw new Error("Chýbajú údaje rezervácie");
@@ -179,6 +180,7 @@ export async function createBooking({
     endDate,
     pickupCity: pickupCity || "",
     totalPrice: totalPrice || null,
+    note: note || "",
     status: "pending",
     createdAt: new Date().toISOString(),
   };

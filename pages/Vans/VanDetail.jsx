@@ -13,6 +13,7 @@ export default function VanDetail() {
         startDate: "",
         endDate: "",
         pickupCity: "",
+        note: "",
     })
     const [bookingMsg, setBookingMsg] = React.useState("")
     const [bookingError, setBookingError] = React.useState(null)
@@ -196,10 +197,11 @@ export default function VanDetail() {
                                             startDate: booking.startDate,
                                             endDate: booking.endDate,
                                             pickupCity: booking.pickupCity,
+                                            note: booking.note,
                                             totalPrice,
                                         })
                                         setBookingMsg("Rezervácia vytvorená. Hostiteľ vás bude kontaktovať.")
-                                        setBooking({ startDate: "", endDate: "", pickupCity: "" })
+                                        setBooking({ startDate: "", endDate: "", pickupCity: "", note: "" })
                                     } catch (err) {
                                         setBookingError(err)
                                     } finally {
@@ -207,37 +209,56 @@ export default function VanDetail() {
                                     }
                                 }}
                             >
-                                <DayPicker
-                                    mode="range"
-                                    selected={
-                                        booking.startDate
-                                            ? {
-                                                from: new Date(booking.startDate),
-                                                to: booking.endDate ? new Date(booking.endDate) : undefined,
-                                            }
-                                            : undefined
-                                    }
-                                    onSelect={(range) => {
-                                        setBookingError(null)
-                                        setBooking({
-                                            ...booking,
-                                            startDate: range?.from ? toLocalISO(range.from) : "",
-                                            endDate: range?.to ? toLocalISO(range.to) : "",
-                                        })
-                                    }}
-                                    disabled={disabledDays}
-                                    fromDate={today}
-                                    modifiersClassNames={{ disabled: "day-disabled" }}
-                                  />
-                                <label>
-                                    Mesto prevzatia
-                                    <input
-                                        type="text"
-                                        placeholder="Bratislava, Košice…"
-                                        value={booking.pickupCity}
-                                        onChange={(e) => setBooking((p) => ({ ...p, pickupCity: e.target.value }))}
+                                <div className="booking-grid">
+                                  <div className="booking-calendar">
+                                    <DayPicker
+                                      mode="range"
+                                      selected={
+                                          booking.startDate
+                                              ? {
+                                                  from: new Date(booking.startDate),
+                                                  to: booking.endDate ? new Date(booking.endDate) : undefined,
+                                              }
+                                              : undefined
+                                      }
+                                      onSelect={(range) => {
+                                          setBookingError(null)
+                                          setBooking({
+                                              ...booking,
+                                              startDate: range?.from ? toLocalISO(range.from) : "",
+                                              endDate: range?.to ? toLocalISO(range.to) : "",
+                                          })
+                                      }}
+                                      disabled={disabledDays}
+                                      fromDate={today}
+                                      modifiersClassNames={{ disabled: "day-disabled" }}
                                     />
-                                </label>
+                                  </div>
+                                  <div className="booking-box">
+                                    <h4>Vybraný termín</h4>
+                                    <p>Od: <strong>{booking.startDate || "—"}</strong></p>
+                                    <p>Do: <strong>{booking.endDate || "—"}</strong></p>
+                                  </div>
+                                  <div className="booking-box">
+                                    <h4>Poznámka pre hostiteľa</h4>
+                                    <textarea
+                                      rows={3}
+                                      placeholder="Napíšte požiadavku k prevzatiu (voliteľné)"
+                                      value={booking.note}
+                                      onChange={(e) => setBooking((p) => ({ ...p, note: e.target.value }))}
+                                    />
+                                  </div>
+                                  <div className="booking-box">
+                                    <h4>Mesto prevzatia</h4>
+                                    <input
+                                      type="text"
+                                      placeholder="Bratislava, Košice…"
+                                      value={booking.pickupCity}
+                                      onChange={(e) => setBooking((p) => ({ ...p, pickupCity: e.target.value }))}
+                                      required
+                                    />
+                                  </div>
+                                </div>
                                 {bookingError && <p className="login-error">{bookingError.message}</p>}
                                 {bookingMsg && <p className="form-note success">{bookingMsg}</p>}
                                 <button className="link-button" type="submit" disabled={bookingLoading}>
