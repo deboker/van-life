@@ -5,36 +5,32 @@ export default function Privacy() {
     <section className="legal-page">
       <h1>Ochrana súkromia</h1>
       <p>
-        This Privacy Policy describes how VanGo collects, uses, and protects
-        your personal data when you browse, book, or host vans on our platform.
+        Táto politika popisuje, ako VanGo zhromažďuje, používa a chráni osobné údaje pri prehliadaní,
+        rezerváciách alebo hostovaní dodávok na našej platforme.
       </p>
-      <h3>Data we collect</h3>
+      <h3>Aké údaje zbierame</h3>
       <p>
-        We collect account information, contact details, booking history,
-        messages, and usage data. If you host, we also collect listing details
-        and payout information.
+        Zbierame informácie o účte, kontaktné údaje, históriu rezervácií, správy a údaje o používaní.
+        Ak hostujete, zhromažďujeme aj detaily inzerátu a údaje na vyplácanie.
       </p>
-      <h3>How we use data</h3>
+      <h3>Ako údaje používame</h3>
       <p>
-        We use data to provide and improve the service, personalize content,
-        process payments, prevent fraud, and communicate with you about your
-        bookings or account.
+        Údaje používame na poskytovanie a zlepšovanie služby, personalizáciu obsahu, spracovanie platieb,
+        prevenciu podvodov a komunikáciu o rezerváciách či účte.
       </p>
-      <h3>Cookies and tracking</h3>
+      <h3>Cookies a sledovanie</h3>
       <p>
-        We use cookies and similar technologies for authentication, analytics,
-        and marketing (with your consent where required). See Cookies Policy for
-        details.
+        Používame cookies a podobné technológie na prihlásenie, analytiku a marketing (so súhlasom, ak je potrebný).
+        Podrobnosti nájdete v Pravidlách cookies.
       </p>
-      <h3>Your choices</h3>
+      <h3>Vaše voľby</h3>
       <p>
-        You can update your profile, manage cookie preferences, and request data
-        access or deletion by contacting support.
+        Môžete upraviť profil, nastaviť preferencie cookies a požiadať o prístup alebo vymazanie údajov
+        kontaktovaním podpory.
       </p>
-      <h3>Contact</h3>
+      <h3>Kontakt</h3>
       <p>
-        For privacy inquiries, email privacy@vango.app. We will respond in a
-        reasonable timeframe.
+        Otázky k súkromiu smerujte na privacy@vango.app. Odpovieme v primeranom čase.
       </p>
     </section>
   );

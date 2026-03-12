@@ -5,32 +5,28 @@ export default function Terms() {
     <section className="legal-page">
       <h1>Podmienky používania</h1>
       <p>
-        Welcome to VanGo. By accessing or using our website and services, you
-        agree to be bound by these Terms of Service. If you do not agree, please
-        do not use the site.
+        Vitajte vo VanGo. Používaním našej stránky a služieb súhlasíte s týmito podmienkami. Ak nesúhlasíte,
+        stránku prosím nepoužívajte.
       </p>
-      <h3>Use of service</h3>
+      <h3>Používanie služby</h3>
       <p>
-        You must be at least 18 years old and provide accurate information when
-        creating an account or booking a van. You are responsible for complying
-        with local laws when hosting or renting.
+        Musíte mať aspoň 18 rokov a uvádzať pravdivé údaje pri vytváraní účtu alebo rezervácii dodávky.
+        Ste zodpovedný za dodržiavanie miestnych zákonov pri hostovaní alebo prenájme.
       </p>
-      <h3>Bookings and payments</h3>
+      <h3>Rezervácie a platby</h3>
       <p>
-        Bookings are subject to availability. Hosts set prices and rules; guests
-        are responsible for reviewing them before confirming. Fees and taxes may
-        apply.
+        Rezervácie podliehajú dostupnosti. Hostitelia určujú ceny a pravidlá; hostia sú zodpovední
+        za ich prečítanie pred potvrdením. Môžu sa uplatniť poplatky a dane.
       </p>
-      <h3>Liability</h3>
+      <h3>Zodpovednosť</h3>
       <p>
-        We provide a platform to connect hosts and guests. We are not the owner
-        of vans listed and are not liable for vehicle condition or incidents
-        during a trip, except as required by law.
+        Poskytujeme platformu na prepojenie hostiteľov a hostí. Nie sme vlastníkmi uvedených vozidiel
+        a nezodpovedáme za ich stav ani incidenty počas cesty, pokiaľ zákon neustanovuje inak.
       </p>
-      <h3>Changes</h3>
+      <h3>Zmeny</h3>
       <p>
-        We may update these Terms from time to time. Continued use after changes
-        constitutes acceptance of the updated Terms.
+        Podmienky môžeme občas aktualizovať. Pokračovaním v používaní po zmenách vyjadrujete súhlas
+        s novým znením podmienok.
       </p>
     </section>
   );

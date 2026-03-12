@@ -5,36 +5,31 @@ export default function Cookies() {
     <section className="legal-page">
       <h1>Pravidlá cookies</h1>
       <p>
-        This policy explains how VanGo uses cookies and similar technologies
-        on our site.
+        Tieto pravidlá vysvetľujú, ako VanGo používa cookies a podobné technológie na našom webe.
       </p>
-      <h3>What are cookies?</h3>
+      <h3>Čo sú cookies?</h3>
       <p>
-        Cookies are small text files placed on your device to store data that
-        can be recalled by a web server in the domain that placed the cookie.
+        Cookies sú malé textové súbory vo vašom zariadení, ktoré ukladajú údaje čitateľné webovým serverom v danom doméne.
       </p>
-      <h3>Types we use</h3>
+      <h3>Typy, ktoré používame</h3>
       <ul>
         <li>
-          <strong>Functional (required):</strong> enable core features like login
-          and booking.
+          <strong>Funkčné (nevyhnutné):</strong> umožňujú základné funkcie ako prihlásenie a rezervácie.
         </li>
         <li>
-          <strong>Analytics:</strong> help us understand site usage. Collected in
-          aggregate form.
+          <strong>Analytické:</strong> pomáhajú pochopiť používanie webu. Zhromažďujú sa v súhrnnej podobe.
         </li>
         <li>
-          <strong>Marketing (optional):</strong> personalize content and ads.
+          <strong>Marketingové (voliteľné):</strong> personalizujú obsah a reklamu.
         </li>
       </ul>
-      <h3>Your choices</h3>
+      <h3>Vaše možnosti</h3>
       <p>
-        You can accept or decline marketing cookies via our cookie banner. You
-        can also control cookies through your browser settings.
+        Marketingové cookies môžete prijať alebo odmietnuť v našom cookie banneri. Cookies viete ovládať aj cez nastavenia prehliadača.
       </p>
-      <h3>Contact</h3>
+      <h3>Kontakt</h3>
       <p>
-        For questions about this policy, email privacy@vango.app.
+        V prípade otázok k týmto pravidlám píšte na privacy@vango.app.
       </p>
     </section>
   );
