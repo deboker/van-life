@@ -24,14 +24,15 @@ export default function Register() {
     setInfo("");
     try {
       const res = await registerUser(form);
+      if (res?.emailVerificationSent) {
+        setInfo("Poslali sme vám overovací e‑mail. Skontrolujte prosím schránku a po overení sa prihláste.");
+        return;
+      }
       localStorage.setItem("loggedin", true);
       if (res?.uid) localStorage.setItem("uid", res.uid);
       else if (res?.user?.id) localStorage.setItem("uid", res.user.id);
       if (res?.name || form.name) {
         localStorage.setItem("name", res?.name || form.name);
-      }
-      if (res?.emailVerificationSent) {
-        setInfo("Poslali sme vám overovací e‑mail. Skontrolujte prosím schránku.");
       }
       navigate(from, { replace: true });
     } catch (err) {

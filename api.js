@@ -20,6 +20,7 @@ import {
   updatePassword,
   sendEmailVerification,
   reload,
+  signOut,
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from "firebase/auth";
@@ -184,6 +185,11 @@ export async function registerUser({ name, email, password }) {
     } catch (verifyErr) {
       console.error("sendEmailVerification failed", verifyErr);
     }
+    try {
+      await signOut(auth); // odhlásime, kým nepotvrdí e‑mail
+    } catch (signOutErr) {
+      console.error("signOut after register failed", signOutErr);
+    }
     return {
       uid: cred.user.uid,
       email: cred.user.email,
@@ -238,6 +244,10 @@ export async function loginUser({ email, password }) {
   try {
     const cred = await signInWithEmailAndPassword(auth, email, password);
     await reload(cred.user);
+    if (!cred.user.emailVerified) {
+      await signOut(auth);
+      return { emailVerified: false };
+    }
     const profile = await fetchUserProfile(cred.user.uid);
     return {
       uid: cred.user.uid,
