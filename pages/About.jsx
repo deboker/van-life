@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import highlightImg from "../assets/images/slovakia_roads.jpg"
 const heroUrl =
   "https://images.unsplash.com/photo-1660294123554-73512d13674f?auto=format&fit=crop&w=2000&q=80";
 
@@ -47,7 +48,7 @@ export default function About() {
                 <div
                     className="highlight highlight-photo"
                     style={{
-                        backgroundImage: "url(/assets/images/slovakia_roads.jpg)"
+                        backgroundImage: `url(${highlightImg})`
                     }}
                 >
                     <span className="visually-hidden">Community on the road</span>
