@@ -2085,9 +2085,18 @@ img.graph {
   font-weight: 700;
 }
 
-.status-pending { background: #fff1c7; color: #946200; }
-.status-confirmed { background: #d9f7c5; color: #2b6b1f; }
-.status-cancelled { background: #ffe0e0; color: #a12222; }
+.status-pending {
+  background: #fff1c7;
+  color: #946200;
+}
+.status-confirmed {
+  background: #d9f7c5;
+  color: #2b6b1f;
+}
+.status-cancelled {
+  background: #ffe0e0;
+  color: #a12222;
+}
 
 .booking-form {
   margin-top: 18px;
@@ -2169,7 +2178,9 @@ img.graph {
     max-width: 320px;
     height: auto;
   }
-  .booking-van { align-items: flex-start; }
+  .booking-van {
+    align-items: flex-start;
+  }
 }
 
 .booking-van .van-thumb {
@@ -2234,4 +2245,80 @@ img.graph {
   background: #ffd7d7;
   color: #a12222;
   border: 1px solid #ffb3b3;
+}
+
+/* DayPicker overrides (match VanGo brand) */
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #ff8c38;
+  --rdp-range_start-date-background-color: #ff8c38;
+  --rdp-range_middle-background-color: #ffb776;
+  --rdp-range_start-color: #fff;
+  font-family: "Inter", sans-serif;
+  background: #fffaf3;
+  border: 1px solid #ffe2c8;
+  border-radius: 12px;
+  padding: 10px;
+}
+.rdp-months {
+  gap: 8px;
+}
+.rdp-caption_label {
+  font-weight: 700;
+  color: #161616;
+}
+.rdp-weekday {
+  color: #4d4d4d;
+  font-weight: 700;
+}
+.rdp-nav button {
+  color: #161616;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 4px;
+}
+.rdp-nav button:hover {
+  background: #ffe2c8;
+}
+.rdp-chevron {
+  fill: #ff8c38 !important;
+}
+.rdp-today:not(.rdp-outside) {
+  color: #ff8c38 !important;
+  font-weight: 800 !important;
+}
+.rdp-day_button {
+  border-radius: 8px;
+}
+.rdp-day_selected,
+.rdp-day_selected:focus-visible {
+  background: #ff8c38 !important;
+  color: #fff !important;
+}
+.rdp-range_middle {
+  background: #ffb776 !important;
+}
+.rdp-day_range_middle {
+  background: #ffb776 !important;
+  color: #161616 !important;
+}
+.rdp-range_end .rdp-day_button {
+  background-color: #ff8c38 !important;
+  color: #fff !important;
+  border-color: #ff8c38 !important;
+}
+.rdp-range_start .rdp-day_button {
+  background-color: #ff8c38 !important;
+  color: #fff !important;
+  border-color: #ff8c38 !important;
+}
+.rdp-day_disabled,
+.day-disabled {
+  background: #ffe2c8 !important;
+  color: #b24f4f !important;
+  pointer-events: none;
+}
+.rdp-day_outside {
+  color: #c2c2c2 !important;
 }

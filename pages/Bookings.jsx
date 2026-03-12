@@ -41,7 +41,6 @@ export default function Bookings() {
                 ) : null}
                 <div>
                   <h3>{b.vanName || "Dodávka"}</h3>
-                  <p className="muted">ID: {b.vanId}</p>
                 </div>
               </div>
               <div className="booking-dates">

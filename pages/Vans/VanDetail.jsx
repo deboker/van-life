@@ -1,6 +1,8 @@
 import React from "react"
 import { Link, useParams, useLocation, useNavigate } from "react-router-dom"
 import { getVan, createBooking, getBookingsForVan } from "../../api"
+import { DayPicker } from "react-day-picker"
+import "react-day-picker/dist/style.css"
 
 export default function VanDetail() {
     const [van, setVan] = React.useState(null)
@@ -19,6 +21,18 @@ export default function VanDetail() {
     const { id } = useParams()
     const location = useLocation()
     const navigate = useNavigate()
+    const today = React.useMemo(() => {
+        const d = new Date()
+        d.setHours(0, 0, 0, 0)
+        return d
+    }, [])
+
+    const toLocalISO = (dateObj) => {
+        if (!dateObj) return ""
+        const offset = dateObj.getTimezoneOffset()
+        const local = new Date(dateObj.getTime() - offset * 60 * 1000)
+        return local.toISOString().slice(0, 10)
+    }
 
     React.useEffect(() => {
         async function loadVans() {
@@ -52,6 +66,14 @@ export default function VanDetail() {
         const manual = (van?.unavailable || []).map(r => ({ ...r, label: "blokované" }))
         return [...manual, ...booked]
     }, [existingBookings, van])
+
+    const disabledDays = React.useMemo(() => {
+        const intervals = blockedRanges.map((r) => ({
+            from: new Date(r.start),
+            to: new Date(r.end),
+        }))
+        return [{ before: today }, ...intervals]
+    }, [blockedRanges, today])
 
     if (loading) {
         return <h1>Načítavam...</h1>
@@ -130,18 +152,6 @@ export default function VanDetail() {
                     <p>{van.description}</p>
                     {isLoggedIn ? (
                         <>
-                            {blockedRanges.length > 0 && (
-                                <div className="blocked-ranges">
-                                    <p className="muted">Nedostupné termíny:</p>
-                                    <div className="blocked-tags">
-                                        {blockedRanges.map((r, idx) => (
-                                            <span key={idx} className="badge status-pending">
-                                                {r.start} – {r.end} ({r.label})
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
                             <form
                                 className="booking-form"
                                 onSubmit={async (e) => {
@@ -165,7 +175,6 @@ export default function VanDetail() {
                                         )
                                     )
                                     const totalPrice = nights * (van?.price || 0)
-                                    // dostupnosť: blokované intervaly a existujúce rezervácie (okrem cancelled)
                                     const overlaps = (aStart, aEnd, bStart, bEnd) =>
                                         new Date(aStart) <= new Date(bEnd) && new Date(aEnd) >= new Date(bStart)
                                     const conflict = blockedRanges.some((r) =>
@@ -198,26 +207,28 @@ export default function VanDetail() {
                                     }
                                 }}
                             >
-                                <div className="booking-row">
-                                    <label>
-                                        Od
-                                        <input
-                                            type="date"
-                                            value={booking.startDate}
-                                            onChange={(e) => setBooking((p) => ({ ...p, startDate: e.target.value }))}
-                                            required
-                                        />
-                                    </label>
-                                    <label>
-                                        Do
-                                        <input
-                                            type="date"
-                                            value={booking.endDate}
-                                            onChange={(e) => setBooking((p) => ({ ...p, endDate: e.target.value }))}
-                                            required
-                                        />
-                                    </label>
-                                </div>
+                                <DayPicker
+                                    mode="range"
+                                    selected={
+                                        booking.startDate
+                                            ? {
+                                                from: new Date(booking.startDate),
+                                                to: booking.endDate ? new Date(booking.endDate) : undefined,
+                                            }
+                                            : undefined
+                                    }
+                                    onSelect={(range) => {
+                                        setBookingError(null)
+                                        setBooking({
+                                            ...booking,
+                                            startDate: range?.from ? toLocalISO(range.from) : "",
+                                            endDate: range?.to ? toLocalISO(range.to) : "",
+                                        })
+                                    }}
+                                    disabled={disabledDays}
+                                    fromDate={today}
+                                    modifiersClassNames={{ disabled: "day-disabled" }}
+                                  />
                                 <label>
                                     Mesto prevzatia
                                     <input
