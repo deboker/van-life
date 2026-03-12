@@ -18,6 +18,8 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
   updatePassword,
+  sendEmailVerification,
+  reload,
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from "firebase/auth";
@@ -172,10 +174,21 @@ export async function registerUser({ name, email, password }) {
         createdAt: new Date().toISOString(),
       });
     }
+    // po vytvorení odošleme overovací e‑mail
+    const actionCodeSettings = {
+      url: window?.location?.origin || "https://van-life-react-andrey.netlify.app/",
+      handleCodeInApp: false,
+    };
+    try {
+      await sendEmailVerification(cred.user, actionCodeSettings);
+    } catch (verifyErr) {
+      console.error("sendEmailVerification failed", verifyErr);
+    }
     return {
       uid: cred.user.uid,
       email: cred.user.email,
       name: name || cred.user.displayName || "",
+      emailVerificationSent: true,
     };
   } catch (err) {
     console.error(err);
@@ -224,11 +237,13 @@ export async function registerUser({ name, email, password }) {
 export async function loginUser({ email, password }) {
   try {
     const cred = await signInWithEmailAndPassword(auth, email, password);
+    await reload(cred.user);
     const profile = await fetchUserProfile(cred.user.uid);
     return {
       uid: cred.user.uid,
       email: cred.user.email,
       name: profile?.name || cred.user.displayName || "",
+      emailVerified: cred.user.emailVerified,
     };
   } catch (err) {
     console.error(err);

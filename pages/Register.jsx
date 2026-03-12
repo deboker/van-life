@@ -6,6 +6,7 @@ export default function Register() {
   const [form, setForm] = React.useState({ name: "", email: "", password: "" });
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
+  const [info, setInfo] = React.useState("");
   const [showPw, setShowPw] = React.useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Register() {
     e.preventDefault();
     setStatus("submitting");
     setError(null);
+    setInfo("");
     try {
       const res = await registerUser(form);
       localStorage.setItem("loggedin", true);
@@ -27,6 +29,9 @@ export default function Register() {
       else if (res?.user?.id) localStorage.setItem("uid", res.user.id);
       if (res?.name || form.name) {
         localStorage.setItem("name", res?.name || form.name);
+      }
+      if (res?.emailVerificationSent) {
+        setInfo("Poslali sme vám overovací e‑mail. Skontrolujte prosím schránku.");
       }
       navigate(from, { replace: true });
     } catch (err) {
@@ -40,6 +45,7 @@ export default function Register() {
     <div className="login-container">
       <h1>Vytvorte si účet</h1>
       {error?.message && <h3 className="login-error">{error.message}</h3>}
+      {info && <p className="login-success">{info}</p>}
       <form onSubmit={handleSubmit} className="login-form">
         <input
           name="name"

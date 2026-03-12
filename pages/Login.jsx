@@ -13,29 +13,31 @@ export default function Login() {
 
     const from = location.state?.from || "/host";
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
         setStatus("submitting")
-        loginUser(loginFormData)
-            .then(data => {
-                setError(null)
-                localStorage.setItem("loggedin", true)
-                if (data?.uid) localStorage.setItem("uid", data.uid)
-                else if (data?.user?.id) localStorage.setItem("uid", data.user.id)
-                const nameFromAuth = data?.name || data?.user?.name
-                if (nameFromAuth) {
-                    localStorage.setItem("name", nameFromAuth)
-                } else {
-                    localStorage.removeItem("name")
-                }
-                navigate(from, { replace: true })
-            })
-            .catch(err => {
-                setError(err)
-            })
-            .finally(() => {
-                setStatus("idle")
-            })
+        setError(null)
+        try {
+            const data = await loginUser(loginFormData)
+            if (data && data.emailVerified === false) {
+                setError(new Error("Najprv potvrďte svoj e‑mail. Poslali sme vám overovací link pri registrácii."))
+                return
+            }
+            localStorage.setItem("loggedin", true)
+            if (data?.uid) localStorage.setItem("uid", data.uid)
+            else if (data?.user?.id) localStorage.setItem("uid", data.user.id)
+            const nameFromAuth = data?.name || data?.user?.name
+            if (nameFromAuth) {
+                localStorage.setItem("name", nameFromAuth)
+            } else {
+                localStorage.removeItem("name")
+            }
+            navigate(from, { replace: true })
+        } catch (err) {
+            setError(err)
+        } finally {
+            setStatus("idle")
+        }
     }
 
     function handleChange(e) {
