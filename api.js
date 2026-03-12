@@ -157,6 +157,7 @@ export async function updateBookingStatus(id, status) {
 export async function createBooking({
   vanId,
   vanName,
+  vanImage,
   hostId,
   renterId,
   renterEmail,
@@ -170,6 +171,7 @@ export async function createBooking({
   const payload = {
     vanId,
     vanName: vanName || "",
+    vanImage: vanImage || "",
     hostId: hostId || "",
     renterId,
     renterEmail: renterEmail || "",

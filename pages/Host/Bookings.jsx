@@ -35,58 +35,72 @@ export default function HostBookings() {
       ) : (
         <div className="booking-list">
           {items.map((b) => (
-            <div key={b.id} className="booking-card">
-              <div className="booking-head">
-                <h3>{b.vanName || "Dodávka"}</h3>
-                <span className={`badge status-${b.status || "pending"}`}>
-                  {b.status || "pending"}
-                </span>
+            <div key={b.id} className="booking-card booking-card-grid">
+              <div className="booking-van">
+                {b.vanImage ? (
+                  <img className="van-thumb" src={b.vanImage} alt={b.vanName} />
+                ) : null}
+                <div>
+                  <h3>{b.vanName || "Dodávka"}</h3>
+                  <p className="muted">{b.renterEmail && `Nájomca: ${b.renterEmail}`}</p>
+                </div>
               </div>
-              <p className="muted">
-                {b.startDate} — {b.endDate}
-              </p>
-              {b.renterEmail && <p>Nájomca: {b.renterEmail}</p>}
-              {b.pickupCity && <p>Prevzatie: {b.pickupCity}</p>}
-              {b.totalPrice && <p>Cena: €{b.totalPrice}</p>}
-              <div className="booking-actions">
-                <button
-                  className="pill primary"
-                  disabled={savingId === b.id}
-                  onClick={async () => {
-                    setSavingId(b.id)
-                    try {
-                      await updateBookingStatus(b.id, "confirmed")
-                      setItems((prev) =>
-                        prev.map((x) => (x.id === b.id ? { ...x, status: "confirmed" } : x))
-                      )
-                    } catch (err) {
-                      setError(err)
-                    } finally {
-                      setSavingId(null)
-                    }
-                  }}
-                >
-                  Potvrdiť
-                </button>
-                <button
-                  className="pill danger"
-                  disabled={savingId === b.id}
-                  onClick={async () => {
-                    setSavingId(b.id)
-                    try {
-                      await updateBookingStatus(b.id, "cancelled")
-                      setItems((prev) =>
-                        prev.map((x) => (x.id === b.id ? { ...x, status: "cancelled" } : x))
-                      )
-                    } catch (err) {
-                      setError(err)
-                    } finally {
-                      setSavingId(null)
-                    }
-                  }}
-                >
-                  Zrušiť
-                </button>
+              <div className="booking-dates">
+                <p>Od: <strong>{b.startDate}</strong></p>
+                <p>Do: <strong>{b.endDate}</strong></p>
+                {b.pickupCity && <p>Prevzatie: {b.pickupCity}</p>}
+              </div>
+              <div className="booking-price">
+                {b.totalPrice ? <p>€{b.totalPrice}</p> : <p className="muted">—</p>}
+              </div>
+              <div className="booking-status">
+                <span className={`badge status-${b.status || "pending"}`}>
+                  {b.status === "confirmed"
+                    ? "Potvrdené"
+                    : b.status === "cancelled"
+                      ? "Zrušené"
+                      : "Čaká na potvrdenie"}
+                </span>
+                <div className="booking-actions">
+                  <button
+                    className="pill primary"
+                    disabled={savingId === b.id}
+                    onClick={async () => {
+                      setSavingId(b.id)
+                      try {
+                        await updateBookingStatus(b.id, "confirmed")
+                        setItems((prev) =>
+                          prev.map((x) => (x.id === b.id ? { ...x, status: "confirmed" } : x))
+                        )
+                      } catch (err) {
+                        setError(err)
+                      } finally {
+                        setSavingId(null)
+                      }
+                    }}
+                  >
+                    Potvrdiť
+                  </button>
+                  <button
+                    className="pill danger"
+                    disabled={savingId === b.id}
+                    onClick={async () => {
+                      setSavingId(b.id)
+                      try {
+                        await updateBookingStatus(b.id, "cancelled")
+                        setItems((prev) =>
+                          prev.map((x) => (x.id === b.id ? { ...x, status: "cancelled" } : x))
+                        )
+                      } catch (err) {
+                        setError(err)
+                      } finally {
+                        setSavingId(null)
+                      }
+                    }}
+                  >
+                    Zrušiť
+                  </button>
+                </div>
               </div>
             </div>
           ))}

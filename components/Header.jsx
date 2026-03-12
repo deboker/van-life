@@ -74,15 +74,6 @@ export default function Header() {
                         Rezervácie
                     </NavLink>
                 )}
-                {isLoggedIn && (
-                    <NavLink
-                        to="/account"
-                        onClick={closeMenu}
-                        style={({ isActive }) => isActive ? activeStyles : null}
-                    >
-                        Účet
-                    </NavLink>
-                )}
                 <NavLink
                     to="/about"
                     onClick={closeMenu}

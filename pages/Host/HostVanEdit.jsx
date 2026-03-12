@@ -15,8 +15,8 @@ export default function HostVanEdit() {
     gallery: [],
     description: "",
     unavailable: [],
-    unavailableText: "",
   });
+  const [unavailableRanges, setUnavailableRanges] = React.useState([]);
   const [mainFile, setMainFile] = React.useState(null);
   const [galleryFiles, setGalleryFiles] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
@@ -40,11 +40,8 @@ export default function HostVanEdit() {
           galleryText: (data.gallery || []).join("\n"),
           description: data.description || "",
           unavailable: data.unavailable || [],
-          unavailableText: (data.unavailable || [])
-            .map((r) => r?.start && r?.end ? `${r.start} to ${r.end}` : "")
-            .filter(Boolean)
-            .join("\n"),
         });
+        setUnavailableRanges(data.unavailable || []);
       } catch (err) {
         setError(err);
       } finally {
@@ -59,6 +56,20 @@ export default function HostVanEdit() {
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
+  const handleRangeChange = (index, field, value) => {
+    setUnavailableRanges((prev) =>
+      prev.map((r, i) => (i === index ? { ...r, [field]: value } : r))
+    );
+  };
+
+  const addRange = () => {
+    setUnavailableRanges((prev) => [...prev, { start: "", end: "" }]);
+  };
+
+  const removeRange = (index) => {
+    setUnavailableRanges((prev) => prev.filter((_, i) => i !== index));
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     setSaving(true);
@@ -69,16 +80,9 @@ export default function HostVanEdit() {
         .split(/\n|,/)
         .map((s) => s.trim())
         .filter(Boolean);
-      const unavailable = form.unavailableText
-        .split(/\n/)
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .map((line) => {
-          const [start, end] = line.split(/\s+to\s+|\s*-\s*|,\s*/i).map((s) => s.trim());
-          if (start && end) return { start, end };
-          return null;
-        })
-        .filter(Boolean);
+      const unavailable = unavailableRanges
+        .filter((r) => r.start && r.end)
+        .map((r) => ({ start: r.start, end: r.end }));
 
       if (mainFile || galleryFiles.length) {
         const uploaded = await uploadImages({
@@ -172,16 +176,40 @@ export default function HostVanEdit() {
             onChange={handleChange}
           />
         </label>
-        <label>
-          Blokované dátumy (po riadkoch, formát YYYY-MM-DD to YYYY-MM-DD)
-          <textarea
-            name="unavailableText"
-            rows={3}
-            value={form.unavailableText}
-            onChange={handleChange}
-            placeholder="2026-04-01 to 2026-04-05"
-          />
-        </label>
+        <div className="unavail-block">
+          <div className="unavail-head">
+            <span>Blokované dátumy (servis, vlastné použitie)</span>
+            <button type="button" className="pill ghost" onClick={addRange}>+ Pridať termín</button>
+          </div>
+          {unavailableRanges.length === 0 && (
+            <p className="muted">Zatiaľ žiadne blokované termíny.</p>
+          )}
+          {unavailableRanges.map((r, idx) => (
+            <div className="unavail-row" key={idx}>
+              <label>
+                Od
+                <input
+                  type="date"
+                  value={r.start}
+                  onChange={(e) => handleRangeChange(idx, "start", e.target.value)}
+                  required
+                />
+              </label>
+              <label>
+                Do
+                <input
+                  type="date"
+                  value={r.end}
+                  onChange={(e) => handleRangeChange(idx, "end", e.target.value)}
+                  required
+                />
+              </label>
+              <button type="button" className="pill danger" onClick={() => removeRange(idx)}>
+                Vymazať
+              </button>
+            </div>
+          ))}
+        </div>
         <label>
           Alebo nahrajte obrázky galérie
           <input

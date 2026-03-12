@@ -34,18 +34,33 @@ export default function Bookings() {
       ) : (
         <div className="booking-list">
           {items.map((b) => (
-            <div key={b.id} className="booking-card">
-              <div className="booking-head">
-                <h3>{b.vanName || "Dodávka"}</h3>
+            <div key={b.id} className="booking-card booking-card-grid">
+              <div className="booking-van">
+                {b.vanImage ? (
+                  <img className="van-thumb" src={b.vanImage} alt={b.vanName} />
+                ) : null}
+                <div>
+                  <h3>{b.vanName || "Dodávka"}</h3>
+                  <p className="muted">ID: {b.vanId}</p>
+                </div>
+              </div>
+              <div className="booking-dates">
+                <p>Od: <strong>{b.startDate}</strong></p>
+                <p>Do: <strong>{b.endDate}</strong></p>
+                {b.pickupCity && <p>Prevzatie: {b.pickupCity}</p>}
+              </div>
+              <div className="booking-price">
+                {b.totalPrice ? <p>€{b.totalPrice}</p> : <p className="muted">—</p>}
+              </div>
+              <div className="booking-status">
                 <span className={`badge status-${b.status || "pending"}`}>
-                  {b.status || "pending"}
+                  {b.status === "confirmed"
+                    ? "Potvrdené"
+                    : b.status === "cancelled"
+                      ? "Zrušené"
+                      : "Čaká na potvrdenie"}
                 </span>
               </div>
-              <p className="muted">
-                {b.startDate} — {b.endDate}
-              </p>
-              {b.pickupCity && <p>Prevzatie: {b.pickupCity}</p>}
-              {b.totalPrice && <p>Cena: €{b.totalPrice}</p>}
             </div>
           ))}
         </div>
