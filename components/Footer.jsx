@@ -11,7 +11,10 @@ export default function Footer() {
             <img src={logo} alt="VanGo logo" />
             <span className="logo-text">VanGo</span>
           </div>
-          <p className="footer-text">Stvorené na cesty. Zostaň zvedavý.</p>
+          <p className="footer-text">
+            Nájdite, rezervujte alebo ponúknite obytné dodávky s istotou.
+            Vytvorené pre flexibilné cestovanie a pohotových hostiteľov.
+          </p>
         </div>
         <div>
           <h4>Podmienky</h4>
