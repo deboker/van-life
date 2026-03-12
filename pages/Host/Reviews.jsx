@@ -23,9 +23,9 @@ export default function Reviews() {
     return (
         <section className="host-reviews">
             <div className="top-text">
-                <h2>Your reviews</h2>
+                <h2>Tvoje recenzie</h2>
                 <p>
-                    Last <span>30 days</span>
+                    Posledných <span>30 dní</span>
                 </p>
             </div>
             <img
@@ -33,7 +33,7 @@ export default function Reviews() {
                 src={reviewsGraph}
                 alt="Review graph"
             />
-            <h3>Reviews (2)</h3>
+            <h3>Recenzie (2)</h3>
             {reviewsData.map((review) => (
                 <div key={review.id}>
                     <div className="review">

@@ -27,15 +27,15 @@ export default function VanDetail() {
     }, [id])
     
     if (loading) {
-        return <h1>Loading...</h1>
+        return <h1>Načítavam...</h1>
     }
     
     if (error) {
-        return <h1>There was an error: {error.message}</h1>
+        return <h1>Nastala chyba: {error.message}</h1>
     }
 
     const search = location.state?.search || "";
-    const type = location.state?.type || "all";
+    const type = location.state?.type || "všetky";
 
     const images = van
         ? [van.imageUrl, ...(van.gallery || [])].filter(Boolean)
@@ -54,7 +54,7 @@ export default function VanDetail() {
                 to={`..${search}`}
                 relative="path"
                 className="back-button"
-            >&larr; <span>Back to {type} vans</span></Link>
+            >&larr; <span>Späť na {type} dodávky</span></Link>
             
             {van && (
                 <div className="van-detail">
@@ -104,9 +104,9 @@ export default function VanDetail() {
                         {van.type}
                     </i>
                     <h2>{van.name}</h2>
-                    <p className="van-price"><span>${van.price}</span>/day</p>
+                    <p className="van-price"><span>€{van.price}</span>/deň</p>
                     <p>{van.description}</p>
-                    <button className="link-button">Rent this van</button>
+                    <button className="link-button">Prenajať túto dodávku</button>
                 </div>
             )}
         </div>

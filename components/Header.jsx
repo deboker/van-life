@@ -31,7 +31,9 @@ export default function Header() {
 
     return (
         <header>
-            <Link className="site-logo" to="/">#VanLife</Link>
+            <Link className="site-logo" to="/">
+                <img src="/assets/images/vanGo_logo.webp" alt="VanGo logo" />
+            </Link>
             <button
                 className={`burger ${isOpen ? "open" : ""}`}
                 onClick={() => setIsOpen(prev => !prev)}
@@ -49,7 +51,7 @@ export default function Header() {
                     onClick={closeMenu}
                     style={({ isActive }) => isActive ? activeStyles : null}
                 >
-                    Home
+                    Domov
                 </NavLink>
                 <NavLink
                     to="/host"
@@ -63,21 +65,21 @@ export default function Header() {
                     onClick={closeMenu}
                     style={({ isActive }) => isActive ? activeStyles : null}
                 >
-                    About
+                    O nás
                 </NavLink>
                 <NavLink
                     to="/vans"
                     onClick={closeMenu}
                     style={({ isActive }) => isActive ? activeStyles : null}
                 >
-                    Vans
+                    Dodávky
                 </NavLink>
                 {isLoggedIn ? (
                     <>
                         <Link to="/account" className="user-pill" onClick={closeMenu} aria-label="Account">
                             {userName || "You"}
                         </Link>
-                        <button className="logout-btn" onClick={fakeLogOut}>Log out</button>
+                        <button className="logout-btn" onClick={fakeLogOut}>Odhlásiť</button>
                     </>
                 ) : (
                     <Link to="login" className="login-link" onClick={closeMenu} aria-label="Login">

@@ -52,7 +52,7 @@ export default function Login() {
                 location.state?.message &&
                     <h3 className="login-error">{location.state.message}</h3>
             }
-            <h1>Sign in to your account</h1>
+            <h1>Prihláste sa</h1>
             {
                 error?.message &&
                     <h3 className="login-error">{error.message}</h3>
@@ -63,7 +63,7 @@ export default function Login() {
                     name="email"
                     onChange={handleChange}
                     type="email"
-                    placeholder="Email address"
+                    placeholder="E-mailová adresa"
                     value={loginFormData.email}
                     autoComplete="email"
                 />
@@ -71,7 +71,7 @@ export default function Login() {
                     name="password"
                     onChange={handleChange}
                     type={showPw ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder="Heslo"
                     value={loginFormData.password}
                     autoComplete="current-password"
                 />
@@ -81,19 +81,19 @@ export default function Login() {
                         checked={showPw}
                         onChange={(e) => setShowPw(e.target.checked)}
                     />
-                    <span>Show password</span>
+                    <span>Zobraziť heslo</span>
                 </label>
                 <button
                     disabled={status === "submitting"}
                 >
                     {status === "submitting"
-                        ? "Logging in..."
-                        : "Log in"
+                        ? "Prihlasujem..."
+                        : "Prihlásiť sa"
                     }
                 </button>
             </form>
             <p className="login-switch">
-                Don't have an account? <Link to="/register">Create one</Link>
+                Nemáte účet? <Link to="/register">Vytvorte si ho</Link>
             </p>
         </div>
     )

@@ -23,7 +23,7 @@ export default function Dashboard() {
                 <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
                 <div className="host-van-info">
                     <h3>{van.name}</h3>
-                    <p>${van.price}/day</p>
+                    <p>€{van.price}/deň</p>
                 </div>
                 <Link to={`vans/${van.id}`}>View</Link>
             </div>
@@ -41,37 +41,37 @@ export default function Dashboard() {
     // }
 
     if (error) {
-        return <h1>Error: {error.message}</h1>
+        return <h1>Chyba: {error.message}</h1>
     }
 
     return (
         <>
             <section className="host-dashboard-earnings">
                 <div className="info">
-                    <h1>Welcome, {name}!</h1>
-                    <p>Income last <span>30 days</span></p>
-                    <h2>$2,260</h2>
+                    <h1>Vitaj, {name}!</h1>
+                    <p>Príjem za <span>posledných 30 dní</span></p>
+                    <h2>€2,260</h2>
                 </div>
-                <Link to="income">Details</Link>
+                <Link to="income">Detaily</Link>
             </section>
             <section className="host-dashboard-reviews">
-                <h2>Review score</h2>
+                <h2>Hodnotenie</h2>
 
                 <BsStarFill className="star" />
 
                 <p>
                     <span>5.0</span>/5
                 </p>
-                <Link to="reviews">Details</Link>
+                <Link to="reviews">Detaily</Link>
             </section>
             <section className="host-dashboard-vans">
                 <div className="top">
-                    <h2>Your listed vans</h2>
-                    <Link to="vans">View all</Link>
+                    <h2>Tvoje dodávky</h2>
+                    <Link to="vans">Zobraziť všetky</Link>
                 </div>
                 {
                     loading && !vans
-                    ? <h1>Loading...</h1>
+                    ? <h1>Načítavam...</h1>
                     : (
                         <>
                             {renderVanElements(vans)}

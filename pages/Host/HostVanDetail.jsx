@@ -27,11 +27,11 @@ export default function HostVanDetail() {
     }, [id])
 
     if (loading) {
-        return <h1>Loading...</h1>
+        return <h1>Načítavam...</h1>
     }
 
     if (error) {
-        return <h1>There was an error: {error.message}</h1>
+        return <h1>Nastala chyba: {error.message}</h1>
     }
 
     const activeStyles = {
@@ -46,7 +46,7 @@ export default function HostVanDetail() {
                 to=".."
                 relative="path"
                 className="back-button"
-            >&larr; <span>Back to all vans</span></Link>
+            >&larr; <span>Späť na všetky dodávky</span></Link>
             {currentVan &&
                 <div className="host-van-detail-layout-container">
                     <div className="host-van-detail">
@@ -58,14 +58,14 @@ export default function HostVanDetail() {
                                 {currentVan.type}
                             </i>
                             <h3>{currentVan.name}</h3>
-                            <h4>${currentVan.price}/day</h4>
+                            <h4>€{currentVan.price}/deň</h4>
                             {currentVan.hostId === uid && (
                                 <div className="host-van-actions">
-                                    <Link to="edit" className="link-button secondary">Edit</Link>
+                                    <Link to="edit" className="link-button secondary">Upraviť</Link>
                                     <button
                                         className="link-button danger"
                                         onClick={async () => {
-                                            const ok = confirm("Delete this van?");
+                                            const ok = confirm("Vymazať túto dodávku?");
                                             if (!ok) return;
                                             setDeleting(true);
                                             try {
@@ -79,7 +79,7 @@ export default function HostVanDetail() {
                                         }}
                                         disabled={deleting}
                                     >
-                                        {deleting ? "Deleting..." : "Delete"}
+                                        {deleting ? "Mažem..." : "Vymazať"}
                                     </button>
                                 </div>
                             )}
@@ -92,19 +92,19 @@ export default function HostVanDetail() {
                             end
                             style={({ isActive }) => isActive ? activeStyles : null}
                         >
-                            Details
+                            Detaily
                     </NavLink>
                         <NavLink
                             to="pricing"
                             style={({ isActive }) => isActive ? activeStyles : null}
                         >
-                            Pricing
+                            Cenník
                     </NavLink>
                         <NavLink
                             to="photos"
                             style={({ isActive }) => isActive ? activeStyles : null}
                         >
-                            Photos
+                            Fotky
                     </NavLink>
                     </nav>
                     <Outlet context={{ currentVan }} />

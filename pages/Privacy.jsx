@@ -3,9 +3,9 @@ import React from "react";
 export default function Privacy() {
   return (
     <section className="legal-page">
-      <h1>Privacy Policy</h1>
+      <h1>Ochrana súkromia</h1>
       <p>
-        This Privacy Policy describes how #VanLife collects, uses, and protects
+        This Privacy Policy describes how VanGo collects, uses, and protects
         your personal data when you browse, book, or host vans on our platform.
       </p>
       <h3>Data we collect</h3>
@@ -33,7 +33,7 @@ export default function Privacy() {
       </p>
       <h3>Contact</h3>
       <p>
-        For privacy inquiries, email privacy@vanlife.app. We will respond in a
+        For privacy inquiries, email privacy@vango.app. We will respond in a
         reasonable timeframe.
       </p>
     </section>

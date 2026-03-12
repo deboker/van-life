@@ -14,12 +14,12 @@ export default function About() {
             <div className="about-page-content">
                 <h1>Don’t squeeze in a sedan when you could relax in a van.</h1>
                 <p>Our mission is to enliven your road trip with the perfect travel van rental. Our vans are recertified before each trip to ensure your travel plans can go off without a hitch. (Hitch costs extra 😉)</p>
-                <p>Our team is full of vanlife enthusiasts who know firsthand the magic of touring the world on 4 wheels.</p>
+                <p>Our team is full of VanGo enthusiasts who know firsthand the magic of touring the world on 4 wheels.</p>
             </div>
             <section className="about-intro">
-                <h2>About #VanLife</h2>
+                <h2>About VanGo</h2>
                 <p>
-                    #VanLife is a modern web app that connects travelers with trusted hosts who share a love
+                    VanGo is a modern web app that connects travelers with trusted hosts who share a love
                     for life on the road. We make it effortless to discover, compare, and book camper vans —
                     with transparent pricing, responsive support, and tools that keep both guests and hosts in sync.
                 </p>
@@ -94,8 +94,8 @@ export default function About() {
                 </div>
             </section>
             <div className="about-page-cta">
-                <h2>Your destination is waiting.<br />Your van is ready.</h2>
-                <Link className="link-button" to="/vans">Explore our vans</Link>
+                <h2>Vaša destinácia čaká.<br />Vaša dodávka je pripravená.</h2>
+                <Link className="link-button" to="/vans">Pozrieť dodávky</Link>
             </div>
         </div>
     );

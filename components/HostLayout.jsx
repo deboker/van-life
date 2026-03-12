@@ -17,28 +17,28 @@ export default function HostLayout() {
                         end
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
-                        Dashboard
+                        Prehľad
                     </NavLink>
 
                     <NavLink
                         to="income"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
-                        Income
+                        Príjmy
                     </NavLink>
                     
                     <NavLink
                         to="vans"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
-                        Vans
+                        Dodávky
                     </NavLink>
 
                     <NavLink
                         to="reviews"
                         style={({ isActive }) => isActive ? activeStyles : null}
                     >
-                        Reviews
+                        Recenzie
                     </NavLink>
                 </nav>
             </div>

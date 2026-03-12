@@ -3,56 +3,56 @@ import React from "react";
 const testimonials = [
   {
     name: "Mara S.",
-    role: "Solo traveler",
-    text: "Booked in under 5 minutes and the pickup instructions were crystal clear.",
+    role: "Solo cestovateľka",
+    text: "Rezervovala som do 5 minút a pokyny na vyzdvihnutie boli úplne jasné.",
     avatar: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=160&h=160&q=80",
   },
   {
     name: "Diego R.",
-    role: "Host · Portland",
-    text: "Calendar sync + instant alerts mean I don’t double-book my vans anymore.",
+    role: "Hostiteľ · Portland",
+    text: "Synchronizácia kalendára a okamžité upozornenia – už dvojmo nebookujem.",
     avatar: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=160&h=160&q=80",
   },
   {
     name: "Anika P.",
-    role: "Weekend camper",
-    text: "Loved the detailed photos; what I saw online is exactly what I got at pickup.",
+    role: "Víkendová kemperka",
+    text: "Detailné fotky – to, čo som videla online, som dostala aj pri vyzdvihnutí.",
     avatar: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=160&h=160&q=80",
   },
   {
     name: "Caleb H.",
-    role: "Remote worker",
-    text: "High-roof van, solid solar, and easy handoff. Road office unlocked.",
+    role: "Pracujem na diaľku",
+    text: "Vysoká strecha, spoľahlivé soláry a jednoduché odovzdanie. Cestovná kancelária odomknutá.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&h=160&q=80",
   },
   {
     name: "Zoë L.",
-    role: "Family of four",
-    text: "Filters made it simple to find a kid-friendly layout and car seats ready.",
+    role: "Rodina štyroch",
+    text: "Filtre mi rýchlo našli rodinný layout a pripravené detské sedačky.",
     avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=160&h=160&q=80&sat=20",
   },
   {
     name: "Priya N.",
-    role: "Host · Denver",
-    text: "Pricing suggestions helped me fill weekdays without discounting weekends.",
+    role: "Hostiteľka · Denver",
+    text: "Tipy na ceny mi vypĺňajú pracovné dni bez znižovania cien na víkend.",
     avatar: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=160&h=160&q=80&sat=-10",
   },
   {
     name: "Jonas K.",
-    role: "Climber",
-    text: "Saved my favorite rigs and shared the list with partners in one link.",
+    role: "Lezec",
+    text: "Uložil som obľúbené vany a jedným linkom ich poslal parťákom.",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&h=160&q=80",
   },
   {
     name: "Leah W.",
-    role: "Photographer",
-    text: "Support answered in minutes when my shoot shifted dates. Lifesaver.",
+    role: "Fotografka",
+    text: "Podpora odpísala do pár minút, keď sa mi posunul termín fotenia. Záchrana.",
     avatar: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=160&h=160&q=80",
   },
   {
     name: "Omar B.",
-    role: "First-time renter",
-    text: "Checklist and chat kept me calm; no surprises at return either.",
+    role: "Prvý prenájom",
+    text: "Checklist a chat ma udržali v kľude; žiadne prekvapenia ani pri vrátení.",
     avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=160&h=160&q=80",
   },
 ];
@@ -106,8 +106,8 @@ export default function TestimonialsSlider() {
   return (
     <section className="testimonials">
       <div className="test-head">
-        <p className="eyebrow">Voices from the road</p>
-        <h2>Loved by renters and hosts</h2>
+        <p className="eyebrow">Hlasy z ciest</p>
+        <h2>Obľúbené u nájomcov aj hostiteľov</h2>
       </div>
       <div className="test-window">
         <div className="test-track" style={trackStyle}>

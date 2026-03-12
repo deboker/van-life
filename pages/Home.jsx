@@ -10,27 +10,6 @@ import { getVans } from "../api";
 import FeatureAccordionSection from "../components/FeatureAccordionSection";
 import TestimonialsSlider from "../components/TestimonialsSlider";
 
-const slides = [
-  {
-    title: "You got the travel plans, we got the travel vans.",
-    body: "Add adventure to your life by joining the #vanlife movement. Rent the perfect van to make your perfect road trip.",
-    cta: "Find your van",
-    image: hero1,
-  },
-  {
-    title: "Stay curious. Choose your backdrop.",
-    body: "Beach sunrises, alpine passes, desert stars — pick a van that matches the route you dream about.",
-    cta: "Browse vans",
-    image: hero2,
-  },
-  {
-    title: "Host your van, earn on the road.",
-    body: "List your camper in minutes, manage bookings, and keep rolling. We handle the guests.",
-    cta: "Start hosting",
-    image: hero3,
-  },
-];
-
 export default function Home() {
   const [index, setIndex] = React.useState(0);
   const timeoutRef = React.useRef(null);
@@ -65,6 +44,27 @@ export default function Home() {
     load();
   }, []);
 
+  const slides = [
+    {
+      title: "Máte plány, my máme dodávky.",
+      body: "Pridajte dobrodružstvo do života s VanGo. Prenajmite si ideálnu dodávku na svoj výlet.",
+      cta: "Nájsť dodávku",
+      ctaLink: "vans",
+    },
+    {
+      title: "Vyberte si kulisu, ktorá vás láka.",
+      body: "Východy slnka na pláži, alpské priesmyky, púštne hviezdy — zvoľte dodávku, čo sedí k vášmu smeru.",
+      cta: "Prehliadať dodávky",
+      ctaLink: "vans",
+    },
+    {
+      title: "Ponúknite svoju dodávku a zarábajte.",
+      body: "Pridajte ju za pár minút, spravujte rezervácie a jazdite ďalej. Hostí riešime spolu s vami.",
+      cta: "Začať hostiť",
+      ctaLink: "host",
+    },
+  ];
+
   return (
     <>
       <div className="home-hero">
@@ -73,13 +73,13 @@ export default function Home() {
             <div
               key={slide.title}
               className={`slide ${i === index ? "active" : ""}`}
-              style={{ backgroundImage: `url(${slide.image})` }}
+              style={{ backgroundImage: `url(${[hero1, hero2, hero3][i]})` }}
             >
               <div className="slide-overlay" />
               <div className="slide-content">
                 <h1>{slide.title}</h1>
                 <p>{slide.body}</p>
-                <Link to={i === 2 ? "host" : "vans"} className="slide-cta">
+                <Link to={slide.ctaLink} className="slide-cta">
                   {slide.cta}
                 </Link>
               </div>
@@ -89,37 +89,28 @@ export default function Home() {
       </div>
       <section className="home-highlights">
         <div className="highlight">
-          <p className="eyebrow">For renters</p>
-          <h2>Pick a van that fits the trip</h2>
-          <p>
-            Filter by style, price, and amenities. See honest photos and details
-            before you book.
-          </p>
+          <p className="eyebrow">Pre nájomcov</p>
+          <h2>Vyberte si dodávku na svoj výlet</h2>
+          <p>Filtrovanie podľa štýlu, ceny a výbavy. Reálne fotky a detaily ešte pred rezerváciou.</p>
         </div>
         <div className="highlight">
-          <p className="eyebrow">For hosts</p>
-          <h2>List in minutes, stay in control</h2>
-          <p>
-            Set your price, blackout dates, and rules. We keep your calendar and
-            payouts tidy.
-          </p>
+          <p className="eyebrow">Pre hostiteľov</p>
+          <h2>Pridanie za minútu, plná kontrola</h2>
+          <p>Nastavte cenu, blokované dátumy a pravidlá. Kalendár aj výplaty máte prehľadné.</p>
         </div>
         <div className="highlight">
-          <p className="eyebrow">On the road</p>
-          <h2>Support that actually answers</h2>
-          <p>
-            Chat with humans, not bots, if plans change. Trip insurance options
-            included.
-          </p>
+          <p className="eyebrow">Na cestách</p>
+          <h2>Podpora, ktorá odpovie</h2>
+          <p>Ak sa plány menia, píšete ľuďom, nie botom. Poistenie výletu na dosah.</p>
         </div>
         <div className="highlight cta-tile">
-          <h3>Ready to roll?</h3>
+          <h3>Pripravení vyraziť?</h3>
           <div className="cta-row">
             <Link to="vans" className="pill dark">
-              Find a van
+              Nájsť dodávku
             </Link>
             <Link to="host" className="pill ghost">
-              Host your van
+              Ponúknuť dodávku
             </Link>
           </div>
         </div>
@@ -127,15 +118,15 @@ export default function Home() {
       <section className="home-featured">
         <div className="featured-head">
           <div>
-            <p className="eyebrow">Popular right now</p>
-            <h2>Featured vans</h2>
+            <p className="eyebrow">Aktuálne obľúbené</p>
+            <h2>Vybrané dodávky</h2>
           </div>
           <Link to="vans" className="pill ghost">
-            View all vans
+            Zobraziť všetky
           </Link>
         </div>
 
-        {errorFeat && <p className="error">Could not load vans.</p>}
+        {errorFeat && <p className="error">Dodávky sa nepodarilo načítať.</p>}
         <div className="featured-grid">
           {(loadingFeat ? new Array(3).fill(null) : featured).map(
             (van, idx) => (
@@ -145,7 +136,7 @@ export default function Home() {
                 </div>
                 <div className="featured-meta">
                   <div>
-                    <p className="van-name">{van?.name || "Loading..."}</p>
+                    <p className="van-name">{van?.name || "Načítavam..."}</p>
                     {van && (
                       <span className={`van-type-pill ${van.type}`}>
                         {van.type}
@@ -155,8 +146,8 @@ export default function Home() {
                   <div className="price">
                     {van ? (
                       <>
-                        ${van.price}
-                        <span>/day</span>
+                        €{van.price}
+                        <span>/deň</span>
                       </>
                     ) : (
                       "—"
@@ -167,7 +158,7 @@ export default function Home() {
                   to={van ? `vans/${van.id}` : "#"}
                   className="pill primary block"
                 >
-                  View
+                  Zobraziť
                 </Link>
               </div>
             ),
@@ -176,68 +167,44 @@ export default function Home() {
       </section>
       <section className="home-steps">
         <div className="steps-head">
-          <p className="eyebrow">How it works</p>
-          <h2>Book in three easy steps</h2>
+          <p className="eyebrow">Ako to funguje</p>
+          <h2>Rezervácia v troch krokoch</h2>
           <p className="muted">
-            Zero phone calls, no hidden fees, instant confirmation.
+            Bez telefonátov, bez skrytých poplatkov, okamžité potvrdenie.
           </p>
         </div>
         <div className="steps-grid">
           <div className="step-card">
             <div className="step-icon">
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
+              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M10.5 4a6.5 6.5 0 0 1 5.182 10.438l3.44 3.44a1 1 0 0 1-1.414 1.414l-3.44-3.44A6.5 6.5 0 1 1 10.5 4Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z" />
               </svg>
             </div>
-            <h3>Browse</h3>
-            <p>
-              Filter by type, price, and host rating. Every van has real photos
-              and clear amenities.
-            </p>
+            <h3>Vyhľadať</h3>
+            <p>Filtrovať podľa typu, ceny a hodnotenia hostiteľa. Reálne fotky a jasná výbava.</p>
           </div>
           <div className="step-card">
             <div className="step-icon">
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
+              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1Zm0 6a1 1 0 1 0 0 2h10a1 1 0 1 0 0-2H7Z" />
               </svg>
             </div>
-            <h3>Pick dates</h3>
-            <p>
-              Lock in your dates with instant booking. Transparent pricing
-              before you click confirm.
-            </p>
+            <h3>Vybrať termín</h3>
+            <p>Potvrďte dátumy okamžitou rezerváciou. Transparentná cena ešte pred potvrdením.</p>
           </div>
           <div className="step-card">
             <div className="step-icon">
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
+              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M10.28 3.11a1 1 0 0 1 .97-.61h1.5a1 1 0 0 1 .97 1.26l-2.6 9.74a1 1 0 0 0 1.94.52l2.6-9.73A3 3 0 0 0 12.75 1h-1.5a3 3 0 0 0-2.91 3.78l2.36 8.84a1 1 0 0 0 1.93-.52l-2.35-8.84Zm-5.4 3.53A1 1 0 0 0 3 7.62V21a1 1 0 0 0 1.24.97l5.5-1.37a1 1 0 0 0 .74-.97v-5.63a1 1 0 0 0-.03-.25L4.88 6.64Zm13.84.11-6.27 7.94a1 1 0 0 0-.22.62v5.86a1 1 0 0 0 .74.97l5.5 1.37A1 1 0 0 0 20 21V7.62a1 1 0 0 0-1.28-.88Z" />
               </svg>
             </div>
-            <h3>Hit the road</h3>
-            <p>
-              Easy pickup instructions, in-trip chat with the host, and support
-              from our team if plans change.
-            </p>
+            <h3>Vyraziť</h3>
+            <p>Jednoduché pokyny na prevzatie, chat s hostiteľom počas cesty a podpora, ak sa plány menia.</p>
           </div>
         </div>
         <div className="steps-cta">
           <Link to="vans" className="pill primary">
-            See all vans
+            Zobraziť všetky dodávky
           </Link>
         </div>
       </section>
@@ -245,15 +212,15 @@ export default function Home() {
       <TestimonialsSlider />
       <section className="confidence-cta">
         <div>
-          <p className="eyebrow">Book with confidence</p>
+          <p className="eyebrow">Rezervujte s istotou</p>
           <h2>
-            Your destination is waiting.
+            Vaša destinácia čaká.
             <br />
-            Your van is ready.
+            Vaša dodávka je pripravená.
           </h2>
         </div>
         <Link to="vans" className="link-button">
-          Explore our vans
+          Pozrieť dodávky
         </Link>
       </section>
     </>

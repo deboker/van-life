@@ -41,11 +41,11 @@ export default function CookieBanner() {
   return (
     <div className="cookie-banner">
       <div className="cookie-text">
-        <h4>We use cookies</h4>
+        <h4>Používame cookies</h4>
         <p>
-          We use cookies and other tracking technologies to improve your browsing
-          experience, show personalized content, analyze traffic, and understand
-          where our visitors are coming from.
+          Cookies a ďalšie technológie používame na zlepšenie prehliadania, zobrazovanie
+          personalizovaného obsahu, analýzu návštevnosti a pochopenie, odkiaľ prichádzajú
+          naši návštevníci.
         </p>
       </div>
       <div className="cookie-actions">
@@ -55,7 +55,7 @@ export default function CookieBanner() {
             saveConsent({ functional: true, marketing: false })
           }
         >
-          I decline
+          Nesúhlasím
         </button>
         <button
           className="link-button"
@@ -63,33 +63,30 @@ export default function CookieBanner() {
             saveConsent({ functional: true, marketing: true })
           }
         >
-          I agree
+          Súhlasím
         </button>
         <button
           className="link-button ghost"
           onClick={() => setShowSettings((p) => !p)}
         >
-          Change my settings
+          Nastaviť cookies
         </button>
       </div>
       {showSettings && (
         <div className="cookie-settings">
           <div className="cookie-setting">
             <div>
-              <h5>Functional</h5>
+              <h5>Funkčné</h5>
               <p>
-                Always active. Needed to enable core features and secure
-                transmission.
+                Vždy aktívne. Potrebné pre základné funkcie a bezpečný prenos.
               </p>
             </div>
-            <span className="badge">Always on</span>
+            <span className="badge">Vždy zapnuté</span>
           </div>
           <div className="cookie-setting">
             <div>
               <h5>Marketing</h5>
-              <p>
-                Used to create profiles for ads or track activity across sites.
-              </p>
+              <p>Vytvára profily na reklamu alebo sleduje aktivitu na webe.</p>
             </div>
             <label className="switch">
               <input
@@ -109,7 +106,7 @@ export default function CookieBanner() {
                 saveConsent({ functional: true, marketing })
               }
             >
-              Save preferences
+              Uložiť nastavenia
             </button>
           </div>
         </div>

@@ -13,33 +13,33 @@ const feature5 =
 
 const items = [
   {
-    title: "Plan trips faster",
+    title: "Plánujte trasy rýchlejšie",
     description:
-      "Create a shareable itinerary with vans, routes, and pickup details that your crew can see anywhere.",
+      "Vytvorte zdieľateľný itinerár s dodávkami, trasami a pokynmi na vyzdvihnutie, ktorý vaša posádka uvidí kdekoľvek.",
     image: feature1,
   },
   {
-    title: "Share with guests",
+    title: "Zdieľajte s hosťami",
     description:
-      "Send a single link with photos, pricing, and rules. Guests confirm in one click, no back-and-forth.",
+      "Pošlite jeden odkaz s fotkami, cenou a pravidlami. Hostia potvrdia jedným klikom, bez dohadovania.",
     image: feature2,
   },
   {
-    title: "Stay organized",
+    title: "Majte poriadok",
     description:
-      "Keep notes, add tags like “family”, “surf”, or “workcation” and find the right van in seconds.",
+      "Ukladajte poznámky, pridajte tagy „rodina“, „surf“ či „workation“ a nájdite správnu dodávku za pár sekúnd.",
     image: feature3,
   },
   {
-    title: "Sync your team",
+    title: "Zlaďte svoj tím",
     description:
-      "Share availability and lock dates so multiple hosts don’t double‑book the same van.",
+      "Zdieľajte dostupnosť a uzamknite dátumy, aby viacerí hostitelia nezarezervovali tú istú dodávku.",
     image: feature4,
   },
   {
-    title: "Stay in the loop",
+    title: "Buďte v obraze",
     description:
-      "Get alerts for pickups, returns, and maintenance reminders right in your dashboard.",
+      "Dostávajte upozornenia na vyzdvihnutia, vrátenia aj pripomienky servisu priamo v dashborde.",
     image: feature5,
   },
 ];

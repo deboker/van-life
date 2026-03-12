@@ -94,14 +94,14 @@ export default function HostVanEdit() {
   return (
     <section className="van-edit">
       <div className="add-van-head">
-        <h1>Edit van</h1>
+        <h1>Upraviť dodávku</h1>
         <p className="muted">
-          Update photos, pricing, or copy. Changes go live immediately.
+          Aktualizujte fotky, ceny alebo popis. Zmeny sa prejavia okamžite.
         </p>
       </div>
       <form className="van-edit-form" onSubmit={handleSubmit}>
         <label>
-          Name
+          Názov
           <input
             name="name"
             value={form.name}
@@ -110,7 +110,7 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
-          Price per day (USD)
+          Cena za deň (EUR)
           <input
             name="price"
             type="number"
@@ -121,7 +121,7 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
-          Type
+          Typ
           <select name="type" value={form.type} onChange={handleChange}>
             <option value="simple">Simple</option>
             <option value="rugged">Rugged</option>
@@ -129,7 +129,7 @@ export default function HostVanEdit() {
           </select>
         </label>
         <label>
-          Image URL
+          URL hlavného obrázka
           <input
             name="imageUrl"
             value={form.imageUrl}
@@ -138,7 +138,7 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
-          Or upload new main image
+          Alebo nahrajte nový hlavný obrázok
           <input
             type="file"
             accept="image/*"
@@ -146,7 +146,7 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
-          Gallery image URLs (one per line or comma-separated)
+          URL obrázkov galérie (jeden na riadok alebo oddelené čiarkou)
           <textarea
             name="galleryText"
             rows={3}
@@ -155,7 +155,7 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
-          Or upload gallery images
+          Alebo nahrajte obrázky galérie
           <input
             type="file"
             accept="image/*"
@@ -164,7 +164,7 @@ export default function HostVanEdit() {
           />
         </label>
         <label>
-          Description
+          Popis
           <textarea
             name="description"
             rows={4}
@@ -180,16 +180,16 @@ export default function HostVanEdit() {
             className="link-button secondary"
             onClick={() => navigate(-1)}
           >
-            Cancel
+            Zrušiť
           </button>
           <button className="link-button" type="submit" disabled={saving}>
             {saving ? (
               <>
                 <span className="btn-spinner" aria-hidden="true" />
-                Saving...
+                Ukladám...
               </>
             ) : (
-              "Save changes"
+              "Uložiť zmeny"
             )}
           </button>
         </div>

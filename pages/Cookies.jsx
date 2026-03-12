@@ -3,9 +3,9 @@ import React from "react";
 export default function Cookies() {
   return (
     <section className="legal-page">
-      <h1>Cookies Policy</h1>
+      <h1>Pravidlá cookies</h1>
       <p>
-        This policy explains how #VanLife uses cookies and similar technologies
+        This policy explains how VanGo uses cookies and similar technologies
         on our site.
       </p>
       <h3>What are cookies?</h3>
@@ -34,7 +34,7 @@ export default function Cookies() {
       </p>
       <h3>Contact</h3>
       <p>
-        For questions about this policy, email privacy@vanlife.app.
+        For questions about this policy, email privacy@vango.app.
       </p>
     </section>
   );

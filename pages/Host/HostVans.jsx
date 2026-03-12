@@ -34,26 +34,26 @@ export default function HostVans() {
                 <img src={van.imageUrl} alt={`Photo of ${van.name}`} />
                 <div className="host-van-info">
                     <h3>{van.name}</h3>
-                    <p>${van.price}/day</p>
+                    <p>€{van.price}/deň</p>
                 </div>
             </div>
         </Link>
     ))
 
     if (loading) {
-        return <h1>Loading...</h1>
+        return <h1>Načítavam...</h1>
     }
 
     if (error) {
-        return <h1>There was an error: {error.message}</h1>
+        return <h1>Nastala chyba: {error.message}</h1>
     }
 
     return (
         <section>
             <div className="host-vans-header">
-                <h1 className="host-vans-title">Your listed vans</h1>
+                <h1 className="host-vans-title">Tvoje dodávky</h1>
                 <button className="pill primary" onClick={() => navigate("/host/vans/new")}>
-                    + Add van
+                    + Pridať dodávku
                 </button>
             </div>
             <div className="host-vans-list">
@@ -64,7 +64,7 @@ export default function HostVans() {
                         </section>
 
                     ) : (
-                            <h2>Loading...</h2>
+                            <h2>Načítavam...</h2>
                         )
                 }
             </div>

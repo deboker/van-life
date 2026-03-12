@@ -10,7 +10,7 @@ export default function AuthRequired() {
             <Navigate 
                 to="/login" 
                 state={{
-                    message: "You must log in first",
+                    message: "Najprv sa musíte prihlásiť",
                     from: location.pathname
                 }} 
                 replace

@@ -38,14 +38,14 @@ export default function Register() {
 
   return (
     <div className="login-container">
-      <h1>Create your account</h1>
+      <h1>Vytvorte si účet</h1>
       {error?.message && <h3 className="login-error">{error.message}</h3>}
       <form onSubmit={handleSubmit} className="login-form">
         <input
           name="name"
           onChange={handleChange}
           type="text"
-          placeholder="Full name"
+          placeholder="Celé meno"
           value={form.name}
           required
           autoComplete="name"
@@ -54,7 +54,7 @@ export default function Register() {
           name="email"
           onChange={handleChange}
           type="email"
-          placeholder="Email address"
+          placeholder="E-mailová adresa"
           value={form.email}
           required
           autoComplete="email"
@@ -63,7 +63,7 @@ export default function Register() {
           name="password"
           onChange={handleChange}
           type={showPw ? "text" : "password"}
-          placeholder="Password (min 6 chars)"
+          placeholder="Heslo (min. 6 znakov)"
           value={form.password}
           required
           autoComplete="new-password"
@@ -77,11 +77,11 @@ export default function Register() {
           <span>Show password</span>
         </label>
         <button disabled={status === "submitting"}>
-          {status === "submitting" ? "Creating..." : "Create account"}
+          {status === "submitting" ? "Vytváram..." : "Vytvoriť účet"}
         </button>
       </form>
       <p className="login-switch">
-        Already have an account? <Link to="/login">Sign in</Link>
+        Už máte účet? <Link to="/login">Prihláste sa</Link>
       </p>
     </div>
   );

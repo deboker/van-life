@@ -3,9 +3,9 @@ import React from "react";
 export default function Terms() {
   return (
     <section className="legal-page">
-      <h1>Terms of Service</h1>
+      <h1>Podmienky používania</h1>
       <p>
-        Welcome to #VanLife. By accessing or using our website and services, you
+        Welcome to VanGo. By accessing or using our website and services, you
         agree to be bound by these Terms of Service. If you do not agree, please
         do not use the site.
       </p>

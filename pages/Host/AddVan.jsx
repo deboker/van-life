@@ -74,16 +74,15 @@ export default function AddVan() {
   return (
     <section className="add-van">
       <div className="add-van-head">
-        <h1>Add a new van</h1>
+        <h1>Pridať novú dodávku</h1>
         <p className="muted">
-          Fill in the details and publish. You can edit later from the van
-          detail page.
+          Vyplňte detaily a publikujte. Neskôr môžete upraviť v detaile dodávky.
         </p>
       </div>
-      {error && <p className="error">Could not save: {error.message}</p>}
+      {error && <p className="error">Nepodarilo sa uložiť: {error.message}</p>}
       <form className="add-van-form" onSubmit={handleSubmit}>
         <label>
-          Name
+          Názov
           <input
             name="name"
             value={form.name}
@@ -93,7 +92,7 @@ export default function AddVan() {
           />
         </label>
         <label>
-          Price per day (USD)
+          Cena za deň (EUR)
           <input
             name="price"
             type="number"
@@ -105,7 +104,7 @@ export default function AddVan() {
           />
         </label>
         <label>
-          Type
+          Typ
           <select name="type" value={form.type} onChange={handleChange}>
             <option value="simple">Simple</option>
             <option value="rugged">Rugged</option>
@@ -113,7 +112,7 @@ export default function AddVan() {
           </select>
         </label>
         <label>
-          Image URL
+          URL hlavného obrázka
           <input
             name="imageUrl"
             value={form.imageUrl}
@@ -122,7 +121,7 @@ export default function AddVan() {
           />
         </label>
         <label>
-          Or upload main image
+          Alebo nahrajte hlavný obrázok
           <input
             type="file"
             accept="image/*"
@@ -130,7 +129,7 @@ export default function AddVan() {
           />
         </label>
         <label>
-          Gallery image URLs (one per line or comma-separated)
+          URL obrázkov galérie (jeden na riadok alebo oddelené čiarkou)
           <textarea
             name="galleryText"
             value={form.galleryText}
@@ -140,7 +139,7 @@ export default function AddVan() {
           />
         </label>
         <label>
-          Or upload gallery images
+          Alebo nahrajte obrázky galérie
           <input
             type="file"
             accept="image/*"
@@ -149,7 +148,7 @@ export default function AddVan() {
           />
         </label>
         <label>
-          Description
+          Popis
           <textarea
             name="description"
             value={form.description}
@@ -167,10 +166,10 @@ export default function AddVan() {
           {status === "submitting" ? (
             <>
               <span className="btn-spinner" aria-hidden="true" />
-              Saving...
+              Ukladám...
             </>
           ) : (
-            "Publish van"
+            "Publikovať dodávku"
           )}
         </button>
       </form>
