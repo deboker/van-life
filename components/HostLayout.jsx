@@ -1,7 +1,15 @@
 import React from "react"
-import { NavLink, Outlet } from "react-router-dom"
+import { NavLink, Outlet, useNavigate } from "react-router-dom"
 
 export default function HostLayout() {
+    const navigate = useNavigate()
+    React.useEffect(() => {
+        const role = localStorage.getItem("role") || "najomca"
+        if (role !== "hostitel") {
+            navigate("/account", { replace: true })
+        }
+    }, [navigate])
+
     const activeStyles = {
         fontWeight: "bold",
         textDecoration: "underline",

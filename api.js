@@ -263,6 +263,7 @@ export async function loginUser({ email, password }) {
       uid: cred.user.uid,
       email: cred.user.email,
       name: profile?.name || cred.user.displayName || "",
+      role: profile?.role || "najomca",
       emailVerified: cred.user.emailVerified,
     };
   } catch (err) {

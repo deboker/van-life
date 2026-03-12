@@ -34,6 +34,11 @@ export default function Login() {
             } else {
                 localStorage.removeItem("name")
             }
+            if (data?.role) {
+                localStorage.setItem("role", data.role)
+            } else {
+                localStorage.removeItem("role")
+            }
             navigate(from, { replace: true })
         } catch (err) {
             setError(err)

@@ -42,6 +42,9 @@ export default function Register() {
       if (res?.name || displayName) {
         localStorage.setItem("name", res?.name || displayName);
       }
+      if (form.role) {
+        localStorage.setItem("role", form.role);
+      }
       navigate(from, { replace: true });
     } catch (err) {
       setError(err);

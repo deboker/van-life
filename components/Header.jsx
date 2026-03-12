@@ -7,6 +7,7 @@ export default function Header() {
     const location = useLocation()
     const [userName, setUserName] = React.useState(() => localStorage.getItem("name") || "")
     const [isLoggedIn, setIsLoggedIn] = React.useState(() => !!localStorage.getItem("loggedin"))
+    const [role, setRole] = React.useState(() => localStorage.getItem("role") || "najomca")
     const activeStyles = {
         fontWeight: "bold",
         textDecoration: "underline",
@@ -20,6 +21,7 @@ export default function Header() {
         closeMenu()
         setUserName(localStorage.getItem("name") || "")
         setIsLoggedIn(!!localStorage.getItem("loggedin"))
+        setRole(localStorage.getItem("role") || "najomca")
     }, [location.pathname])
 
     function fakeLogOut() {
@@ -54,13 +56,24 @@ export default function Header() {
                 >
                     Domov
                 </NavLink>
-                <NavLink
-                    to="/host"
-                    onClick={closeMenu}
-                    style={({ isActive }) => isActive ? activeStyles : null}
-                >
-                    Host
-                </NavLink>
+                {isLoggedIn && role === "hostitel" && (
+                    <NavLink
+                        to="/host"
+                        onClick={closeMenu}
+                        style={({ isActive }) => isActive ? activeStyles : null}
+                    >
+                        Host
+                    </NavLink>
+                )}
+                {isLoggedIn && role !== "hostitel" && (
+                    <NavLink
+                        to="/account"
+                        onClick={closeMenu}
+                        style={({ isActive }) => isActive ? activeStyles : null}
+                    >
+                        Moje rezervácie
+                    </NavLink>
+                )}
                 <NavLink
                     to="/about"
                     onClick={closeMenu}
