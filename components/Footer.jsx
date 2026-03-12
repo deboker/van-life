@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/images/vanGo_logo.webp";
 
 export default function Footer() {
   return (
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="footer-grid">
         <div>
           <div className="site-logo">
-            <img src="/assets/images/vanGo_icon.webp" alt="VanGo logo" />
+            <img src={logo} alt="VanGo logo" />
             <span className="logo-text">VanGo</span>
           </div>
           <p className="footer-text">Stvorené na cesty. Zostaň zvedavý.</p>

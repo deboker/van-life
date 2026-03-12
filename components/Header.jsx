@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, NavLink, useLocation } from "react-router-dom"
+import logo from "../assets/images/vanGo_logo.webp"
 
 export default function Header() {
     const [isOpen, setIsOpen] = React.useState(false)
@@ -32,7 +33,7 @@ export default function Header() {
     return (
         <header>
             <Link className="site-logo" to="/">
-                <img src="/assets/images/vanGo_logo.webp" alt="VanGo logo" />
+                <img src={logo} alt="VanGo logo" />
             </Link>
             <button
                 className={`burger ${isOpen ? "open" : ""}`}
