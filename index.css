@@ -1616,6 +1616,20 @@ i[class*="van-type-"] {
   .host-van-detail-nav a {
     padding: 6px 14px;
   }
+
+  .van-tile h3,
+  .van-tile p {
+    padding: 0 10px;
+  }
+
+  .van-tile .van-type {
+    margin-left: 10px;
+  }
+
+  .van-type {
+    padding: 6px 15px;
+    font-size: 0.8rem;
+  }
 }
 
 .host-van-detail-info > h4 {
