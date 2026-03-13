@@ -8,15 +8,24 @@ export default function Layout() {
     const location = useLocation()
 
     React.useEffect(() => {
+        let ticking = false
+        let lastState = null
+        const threshold = 50
         const onScroll = () => {
-            if (window.scrollY > 10) {
-                document.body.classList.add("scrolled")
-            } else {
-                document.body.classList.remove("scrolled")
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolledNow = window.scrollY > threshold
+                    if (scrolledNow !== lastState) {
+                        document.body.classList.toggle("scrolled", scrolledNow)
+                        lastState = scrolledNow
+                    }
+                    ticking = false
+                })
+                ticking = true
             }
         }
         onScroll()
-        window.addEventListener("scroll", onScroll)
+        window.addEventListener("scroll", onScroll, { passive: true })
         return () => window.removeEventListener("scroll", onScroll)
     }, [])
 
