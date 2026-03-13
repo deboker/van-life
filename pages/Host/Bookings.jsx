@@ -8,12 +8,30 @@ export default function HostBookings() {
   const [savingId, setSavingId] = React.useState(null)
   const uid = typeof window !== "undefined" ? localStorage.getItem("uid") : null
 
+  const formatDateTime = (iso) => {
+    if (!iso) return "—"
+    const d = new Date(iso)
+    if (isNaN(d)) return "—"
+    return d.toLocaleString("sk-SK", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  }
+
   React.useEffect(() => {
     let active = true
     async function load() {
       try {
         const data = await getHostBookings(uid)
-        if (active) setItems(data)
+        if (active) {
+          const sorted = [...data].sort(
+            (a, b) => new Date(b.startDate) - new Date(a.startDate)
+          )
+          setItems(sorted)
+        }
       } catch (err) {
         if (active) setError(err)
       } finally {
@@ -36,6 +54,9 @@ export default function HostBookings() {
         <div className="booking-list">
           {items.map((b) => (
             <div key={b.id} className="booking-card booking-card-grid">
+              <div className="booking-meta">
+                <p className="muted">Rezervované: {formatDateTime(b.createdAt)}</p>
+              </div>
               <div className="booking-van">
                 {b.vanImage ? (
                   <img className="van-thumb" src={b.vanImage} alt={b.vanName} />
@@ -46,11 +67,13 @@ export default function HostBookings() {
                 </div>
               </div>
               <div className="booking-dates">
+                <p className="muted">Dátum rezervácie</p>
                 <p>Od: <strong>{b.startDate}</strong></p>
                 <p>Do: <strong>{b.endDate}</strong></p>
                 {b.pickupCity && <p>Prevzatie: {b.pickupCity}</p>}
               </div>
               <div className="booking-price">
+                <p className="muted">Celková cena</p>
                 {b.totalPrice ? <p>€{b.totalPrice}</p> : <p className="muted">—</p>}
               </div>
               <div className="booking-status">
