@@ -1638,8 +1638,16 @@ i[class*="van-type-"] {
 }
 
 .host-van-detail-image {
-  height: 100px;
-  border-radius: 5px;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.host-van-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 
 .not-found-container {

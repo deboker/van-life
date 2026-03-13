@@ -35,6 +35,13 @@ export default function VanDetail() {
         return local.toISOString().slice(0, 10)
     }
 
+    const formatDate = (dateStr) => {
+        if (!dateStr) return "—"
+        const d = new Date(dateStr)
+        if (isNaN(d)) return "—"
+        return d.toLocaleDateString("sk-SK", { day: "2-digit", month: "2-digit", year: "numeric" })
+    }
+
     React.useEffect(() => {
         async function loadVans() {
             setLoading(true)
@@ -236,8 +243,8 @@ export default function VanDetail() {
                                   </div>
                                   <div className="booking-box">
                                     <h4>Vybraný termín</h4>
-                                    <p>Od: <strong>{booking.startDate || "—"}</strong></p>
-                                    <p>Do: <strong>{booking.endDate || "—"}</strong></p>
+                                    <p>Od: <strong>{formatDate(booking.startDate)}</strong></p>
+                                    <p>Do: <strong>{formatDate(booking.endDate)}</strong></p>
                                   </div>
                                   <div className="booking-box">
                                     <h4>Poznámka pre hostiteľa</h4>

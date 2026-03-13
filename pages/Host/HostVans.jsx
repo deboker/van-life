@@ -36,6 +36,7 @@ export default function HostVans() {
                     <h3>{van.name}</h3>
                     <p>€{van.price}/deň</p>
                 </div>
+                <span className="pill ghost">Detaily</span>
             </div>
         </Link>
     ))
