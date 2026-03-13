@@ -2142,7 +2142,7 @@ img.graph {
 }
 
 .booking-form {
-  margin-top: 18px;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
