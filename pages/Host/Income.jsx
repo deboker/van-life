@@ -35,14 +35,16 @@ export default function Income() {
 
     const today = new Date()
     const from = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000)
+    const bookingDate = (b) => new Date(b.createdAt || b.startDate)
+
     const last30 = bookings
         .filter(b => b.status !== "cancelled")
         .filter(b => {
-            const d = new Date(b.createdAt || b.startDate)
-            return d >= from
+            const d = bookingDate(b)
+            return d >= from && d <= today
         })
     const sortedLast30 = [...last30].sort(
-        (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate)
+        (a, b) => bookingDate(b) - bookingDate(a)
     )
 
     const total = sortedLast30.reduce((sum, b) => sum + Number(b.totalPrice || 0), 0)
@@ -50,7 +52,7 @@ export default function Income() {
         .slice()
         .reverse() // najstarší -> najnovší pre plynulú čiaru
         .map((b) => ({
-            label: new Date(b.startDate || b.createdAt).toLocaleDateString("sk-SK", {
+            label: bookingDate(b).toLocaleDateString("sk-SK", {
                 day: "2-digit",
                 month: "2-digit",
             }),

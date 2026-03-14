@@ -1,5 +1,14 @@
 import React from "react"
 import { getHostBookings, updateBookingStatus } from "../../api"
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts"
 
 export default function HostBookings() {
   const [items, setItems] = React.useState([])
@@ -49,9 +58,40 @@ export default function HostBookings() {
     (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate)
   )
 
+  const buildMonthlyData = () => {
+    const year = new Date().getFullYear()
+    const months = Array.from({ length: 12 }, (_, i) => ({
+      key: i,
+      label: new Date(year, i, 1).toLocaleDateString("sk-SK", { month: "short" }),
+      value: 0,
+    }))
+    sortedItems.forEach((b) => {
+      const d = new Date(b.createdAt || b.startDate)
+      if (!isNaN(d) && d.getFullYear() === year) {
+        months[d.getMonth()].value += 1
+      }
+    })
+    return months
+  }
+
+  const monthlyData = buildMonthlyData()
+
   return (
     <section>
       <h1>Rezervácie mojich dodávok</h1>
+      {sortedItems.length > 0 && (
+        <div className="graph yearly-graph">
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={monthlyData} margin={{ left: 0, right: 10, top: 10, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffe2c8" />
+              <XAxis dataKey="label" stroke="#666" />
+              <YAxis allowDecimals={false} stroke="#666" />
+              <Tooltip formatter={(v) => [`${v} rezervácie`, "Počet"]} />
+              <Bar dataKey="value" fill="#ff8c38" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
       {sortedItems.length === 0 ? (
         <p className="muted">Zatiaľ nemáte žiadne rezervácie na svojich dodávkach.</p>
       ) : (

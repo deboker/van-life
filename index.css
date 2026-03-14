@@ -2200,6 +2200,22 @@ img.graph {
   margin-top: 10px;
 }
 
+.review-form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.review-form select,
+.review-form textarea {
+  width: 100%;
+  border: 1px solid #c8c8c8;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-family: inherit;
+}
+
 .pill.danger {
   background: #e25b52;
   color: #fff;

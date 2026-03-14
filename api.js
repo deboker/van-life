@@ -11,6 +11,7 @@ import {
   updateDoc,
   deleteDoc,
   setDoc,
+  limit,
 } from "firebase/firestore/lite";
 import {
   getAuth,
@@ -50,6 +51,7 @@ const storage = getStorage(app);
 
 const vansCollectionRef = collection(db, "vans");
 const bookingsCollectionRef = collection(db, "bookings");
+const reviewsCollectionRef = collection(db, "reviews");
 
 export async function getVans() {
   const snapshot = await getDocs(vansCollectionRef);
@@ -185,6 +187,69 @@ export async function createBooking({
     createdAt: new Date().toISOString(),
   };
   const docRef = await addDoc(bookingsCollectionRef, payload);
+  return { id: docRef.id, ...payload };
+}
+
+// Reviews
+export async function getHostReviews(hostId) {
+  if (!hostId) return [];
+  const q = query(reviewsCollectionRef, where("hostId", "==", hostId));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function getReviewsForVan(vanId) {
+  if (!vanId) return [];
+  const q = query(reviewsCollectionRef, where("vanId", "==", vanId));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function getReviewsByRenter(renterId) {
+  if (!renterId) return [];
+  const q = query(reviewsCollectionRef, where("renterId", "==", renterId));
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+}
+
+export async function createReview({
+  bookingId,
+  vanId,
+  vanName,
+  hostId,
+  renterId,
+  renterEmail,
+  rating,
+  comment,
+}) {
+  if (!renterId) throw new Error("Musíte byť prihlásený");
+  if (!bookingId || !vanId || !hostId) throw new Error("Chýbajú údaje recenzie");
+  const safeRating = Math.min(5, Math.max(1, Number(rating) || 0));
+  if (!safeRating) throw new Error("Vyberte hodnotenie");
+
+  // jednoduchá ochrana proti duplicitám: jedna recenzia na rezerváciu
+  const existingQ = query(
+    reviewsCollectionRef,
+    where("bookingId", "==", bookingId),
+    limit(1)
+  );
+  const existsSnap = await getDocs(existingQ);
+  if (!existsSnap.empty) {
+    throw new Error("Recenzia pre túto rezerváciu už existuje");
+  }
+
+  const payload = {
+    bookingId,
+    vanId,
+    vanName: vanName || "",
+    hostId,
+    renterId,
+    renterEmail: renterEmail || "",
+    rating: safeRating,
+    comment: comment?.trim() || "",
+    createdAt: new Date().toISOString(),
+  };
+  const docRef = await addDoc(reviewsCollectionRef, payload);
   return { id: docRef.id, ...payload };
 }
 
