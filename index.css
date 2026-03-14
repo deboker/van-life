@@ -208,8 +208,10 @@ main {
 
 .footer h4 {
   margin: 0 0 10px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.3px !important;
 }
 
 .footer-links {
@@ -416,6 +418,9 @@ main {
 @media (max-width: 989px) {
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  header a {
+    padding: 5px 8px;
   }
 }
 
