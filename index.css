@@ -24,6 +24,12 @@ body {
   scrollbar-width: none;
 }
 
+button,
+input[type="button"],
+input[type="submit"] {
+  border-radius: 5px;
+}
+
 .site-wrapper {
   min-height: 100vh;
   display: flex;
@@ -338,7 +344,7 @@ main {
   background: #ff8c38;
   color: white;
   padding: 4px 20px;
-  border-radius: 999px;
+  border-radius: 10px;
   font-weight: 700;
   font-size: 0.85rem;
 }
@@ -899,7 +905,6 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: 26px;
 }
 
 .home-steps {
@@ -1271,12 +1276,14 @@ main {
 /*** VAN PAGES ***/
 .van-list-container {
   padding-inline: 8px;
+  margin-bottom: 40px;
 }
 
 .van-list-filter-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
+  align-items: center;
 }
 
 .van-list-filter-buttons > a {
@@ -1327,18 +1334,24 @@ main {
 
 .van-type {
   height: 34px;
-  padding: 6px 26px;
+  padding: 6px 22px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #ffead0;
   color: #4d4d4d;
   transition: 200ms all cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.van-type.sort {
+  background: #f3f3f3;
+  color: #161616;
+  border: 1px solid #e5e5e5;
+}
+
 .van-type:hover {
-  color: #ffead0;
+  color: #ffffff;
 }
 
 .van-type:focus {
@@ -1362,6 +1375,12 @@ main {
 .van-type.luxury:hover,
 .van-type.luxury.selected {
   background-color: #161616;
+}
+
+.van-type.sort.selected {
+  background: #ff8c38;
+  color: #fff;
+  border-color: #ff8c38;
 }
 
 .van-type.clear-filters {
@@ -1527,10 +1546,6 @@ i[class*="van-type-"] {
   text-decoration: unset;
 }
 
-.host-vans-list {
-  padding-inline: 26px;
-}
-
 .host-vans-title {
   padding-inline: 26px;
 }
@@ -1541,6 +1556,7 @@ i[class*="van-type-"] {
   background-color: white;
   margin-bottom: 15px;
   padding: 18px 24px;
+  border-radius: 10px;
 }
 
 .host-van-single > img {
@@ -1567,6 +1583,7 @@ i[class*="van-type-"] {
   background-color: white;
   padding: 24px;
   margin: 30px 26px;
+  border-radius: 8px;
 }
 
 .host-van-detail {
@@ -1814,6 +1831,7 @@ i[class*="van-type-"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 12px 12px 0 0;
 }
 
 .host-dashboard-earnings > .info > h1 {
@@ -1843,6 +1861,7 @@ i[class*="van-type-"] {
   padding: 25px 26px;
   display: flex;
   align-items: center;
+  border-radius: 0 0 12px 12px;
 }
 
 .host-dashboard-reviews > h2 {
@@ -1868,7 +1887,7 @@ i[class*="van-type-"] {
 }
 
 .host-dashboard-vans {
-  padding: 38px 26px;
+  padding: 38px 0;
 }
 
 .host-dashboard-vans > .top {
@@ -2134,7 +2153,7 @@ img.graph {
   display: inline-flex;
   align-items: center;
   padding: 4px 20px;
-  border-radius: 999px;
+  border-radius: 10px;
   font-size: 0.85rem;
   font-weight: 700;
   text-align: center;

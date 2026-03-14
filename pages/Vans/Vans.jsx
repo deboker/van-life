@@ -9,6 +9,7 @@ export default function Vans() {
     const [error, setError] = React.useState(null)
 
     const typeFilter = searchParams.get("type")
+    const sortFilter = searchParams.get("sort")
 
     React.useEffect(() => {
         async function loadVans() {
@@ -26,11 +27,23 @@ export default function Vans() {
         loadVans()
     }, [])
 
-    const displayedVans = typeFilter
+    const filteredVans = typeFilter
         ? vans.filter(van => van.type === typeFilter)
         : vans
 
-    const vanElements = displayedVans.map(van => (
+    const sortedVans = React.useMemo(() => {
+        const clone = [...filteredVans]
+        if (sortFilter === "rating") {
+            clone.sort((a, b) => (b.avgRating || b.rating || 0) - (a.avgRating || a.rating || 0))
+        } else if (sortFilter === "priceAsc") {
+            clone.sort((a, b) => (a.price || 0) - (b.price || 0))
+        } else if (sortFilter === "priceDesc") {
+            clone.sort((a, b) => (b.price || 0) - (a.price || 0))
+        }
+        return clone
+    }, [filteredVans, sortFilter])
+
+    const vanElements = sortedVans.map(van => (
         <div key={van.id} className="van-tile">
             <Link
                 to={van.id}
@@ -96,11 +109,33 @@ export default function Vans() {
                     }
                 >Do terénu</button>
 
-                {typeFilter ? (
+                <button
+                    onClick={() => handleFilterChange("sort", "rating")}
+                    className={`van-type sort ${sortFilter === "rating" ? "selected" : ""}`}
+                >
+                    Najlepšie hodnotené
+                </button>
+                <button
+                    onClick={() => handleFilterChange("sort", "priceAsc")}
+                    className={`van-type sort ${sortFilter === "priceAsc" ? "selected" : ""}`}
+                >
+                    Cena ↑
+                </button>
+                <button
+                    onClick={() => handleFilterChange("sort", "priceDesc")}
+                    className={`van-type sort ${sortFilter === "priceDesc" ? "selected" : ""}`}
+                >
+                    Cena ↓
+                </button>
+
+                {(typeFilter || sortFilter) ? (
                     <button
-                        onClick={() => handleFilterChange("type", null)}
+                        onClick={() => {
+                            handleFilterChange("type", null)
+                            handleFilterChange("sort", null)
+                        }}
                         className="van-type clear-filters"
-                    >Zrušiť filter</button>
+                    >Zrušiť filtre</button>
                 ) : null}
 
             </div>
