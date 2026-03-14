@@ -45,14 +45,18 @@ export default function HostBookings() {
   if (loading) return <h1>Načítavam rezervácie...</h1>
   if (error) return <h3 className="login-error">{error.message}</h3>
 
+  const sortedItems = [...items].sort(
+    (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate)
+  )
+
   return (
     <section>
       <h1>Rezervácie mojich dodávok</h1>
-      {items.length === 0 ? (
+      {sortedItems.length === 0 ? (
         <p className="muted">Zatiaľ nemáte žiadne rezervácie na svojich dodávkach.</p>
       ) : (
         <div className="booking-list">
-          {items.map((b) => (
+          {sortedItems.map((b) => (
             <div key={b.id} className="booking-card booking-card-grid">
               <div className="booking-meta">
                 <p className="muted">Rezervované: {formatDateTime(b.createdAt)}</p>

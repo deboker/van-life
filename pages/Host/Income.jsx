@@ -41,10 +41,12 @@ export default function Income() {
             const d = new Date(b.createdAt || b.startDate)
             return d >= from
         })
-        .sort((a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate))
+    const sortedLast30 = [...last30].sort(
+        (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate)
+    )
 
-    const total = last30.reduce((sum, b) => sum + Number(b.totalPrice || 0), 0)
-    const chartData = last30
+    const total = sortedLast30.reduce((sum, b) => sum + Number(b.totalPrice || 0), 0)
+    const chartData = sortedLast30
         .slice()
         .reverse() // najstarší -> najnovší pre plynulú čiaru
         .map((b) => ({
@@ -69,14 +71,14 @@ export default function Income() {
                 <IncomeChart data={chartData} />
             </div>
             <div className="info-header">
-                <h3>Tvoje transakcie ({last30.length})</h3>
+                <h3>Tvoje transakcie ({sortedLast30.length})</h3>
                 <p>
                     Posledných <span>30 dní</span>
                 </p>
             </div>
             <div className="transactions">
-                {last30.length === 0 && <p className="muted">Žiadne transakcie v posledných 30 dňoch.</p>}
-                {last30.map((item) => (
+                {sortedLast30.length === 0 && <p className="muted">Žiadne transakcie v posledných 30 dňoch.</p>}
+                {sortedLast30.map((item) => (
                     <div key={item.id} className="transaction">
                         <h3>€{Number(item.totalPrice || 0).toLocaleString("sk-SK")}</h3>
                         <p>{formatDate(item.createdAt || item.startDate)}</p>

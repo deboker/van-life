@@ -25,7 +25,12 @@ export default function Bookings() {
     async function load() {
       try {
         const data = await getRenterBookings(uid)
-        if (active) setItems(data)
+        if (active) {
+          const sorted = [...data].sort(
+            (a, b) => new Date(b.createdAt || b.startDate) - new Date(a.createdAt || a.startDate)
+          )
+          setItems(sorted)
+        }
       } catch (err) {
         if (active) setError(err)
       } finally {
