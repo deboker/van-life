@@ -470,7 +470,7 @@ main {
   position: relative;
   height: 70vh;
   min-height: 520px;
-  margin: 0 -3rem;
+  margin: 0 -7rem;
   overflow: hidden;
 }
 
@@ -1123,9 +1123,27 @@ main {
 .confidence-cta .muted {
   margin: 0;
 }
-@media (max-width: 989px) {
+
+@media (max-width: 1920px) {
+  .home-hero {
+    margin: 0 -5rem;
+  }
+}
+
+@media (max-width: 1600px) {
   .home-hero {
     margin: 0 -4rem;
+  }
+}
+@media (max-width: 1180px) {
+  .home-hero {
+    margin: 0 -3rem;
+  }
+}
+
+@media (max-width: 989px) {
+  .home-hero {
+    margin: 0 -2rem;
   }
 }
 
